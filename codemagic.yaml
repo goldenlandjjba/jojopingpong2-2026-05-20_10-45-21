@@ -1,23 +1,43 @@
 workflows:
   unity_ios_build:
-    name: Unity iOS Build
-    max_build_duration: 90
+    name: Unity iOS Build (Unsigned)
+    max_build_duration: 120
     instance_type: mac_mini_m1
+
     environment:
+      unity: "2023.1.10f1"  # Ou use o script de install se precisar
+      groups:
+        - unity_credentials
       vars:
-        UNITY_VERSION: "6000.0.27f1"      # versão do Unity 6
-        PROJECT_PATH: "."                 # caminho raiz do projeto
+        PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
-        XCODE_VERSION: "16.0"
-        UNITY_LICENSE: "personal"         # usa licença gratuita
+        UNITY_IOS_DIR: "build/ios"
+        XCODE_PROJECT: "Unity-iPhone.xcodeproj"
+        XCODE_SCHEME: "Unity-iPhone"
+
     scripts:
+      # Seus scripts de licença e install Unity (mantenha se usando custom version)
+      - name: Activate Unity License
+        script: |
+          # ... (como antes)
+
       - name: Build iOS Project
         script: |
-          echo "🔧 Iniciando build Unity iOS..."
-          /Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS/Unity \
-            -projectPath ${PROJECT_PATH} \
-            -executeMethod ${BUILD_METHOD} \
-            -buildTarget iOS \
-            -quit -batchmode -nographics
+          # ... (como antes)
+
+      - name: Build IPA Unsigned
+        script: |
+          echo "🏗️ Construindo IPA sem assinatura..."
+          xcode-project build-ipa \
+            --project "${UNITY_IOS_DIR}/${XCODE_PROJECT}" \
+            --scheme "${XCODE_SCHEME}" \
+            --no-codesign  # <-- Isso pula o signing!
+
+      - name: Verificar resultado
+        script: |
+          # ... (como antes, mas sem checar signing)
+
     artifacts:
-      - build/ios
+      - build/ios/*.ipa  # O IPA unsigned sai aqui
+
+    # Sem publishing ou ios_signing!
