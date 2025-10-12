@@ -3,7 +3,7 @@ workflows:
     name: Unity iOS Build
     environment:
       vars:
-        UNITY_VERSION: "6000.0.27f1"
+        UNITY_VERSION: "2022.3.11f1"
     scripts:
       - name: Build Unity iOS Project
         script: |
