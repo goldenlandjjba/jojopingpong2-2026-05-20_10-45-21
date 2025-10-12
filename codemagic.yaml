@@ -73,10 +73,10 @@ workflows:
       - build/ios/**/*.dSYM  # Debug symbols
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM  # Mais symbols
 
-    publishing:  # Opcional: Envia para TestFlight
-      email:
-        recipients:
-          - rafaoliveirasales2017@gmail.com
-      app_store_connect:
-        api_key: codemagic  # Nome da sua chave API
-        submit_to_testflight: true  # Ou true para App Store
+    #publishing:  # Opcional: Envia para TestFlight
+      #email:
+        #recipients:
+          #rafaoliveirasales2017@gmail.com
+      #app_store_connect:
+        #api_key: codemagic  # Nome da sua chave API
+        #submit_to_testflight: true  # Ou true para App Store
