@@ -6,7 +6,7 @@ workflows:
 
     environment:
       vars:
-        UNITY_VERSION: "6000.0.27f1"
+        UNITY_VERSION: "2022.3.47f1"
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
         XCODE_VERSION: "16.0"
