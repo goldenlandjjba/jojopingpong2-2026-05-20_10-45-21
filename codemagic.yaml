@@ -1,5 +1,4 @@
-workflows:
- workflows:
+wworkflows:
   unity_ios_build:
     name: Unity iOS Build
     max_build_duration: 90
@@ -7,11 +6,11 @@ workflows:
 
     environment:
       vars:
-        UNITY_VERSION: "6000.0.27f1"         # Versão do Unity (6.0)
-        PROJECT_PATH: "."                    # Caminho do projeto
-        BUILD_METHOD: "BuildScript.BuildiOS" # Método de build do seu script C#
-        XCODE_VERSION: "16.0"                # Versão do Xcode
-        UNITY_LICENSE: "personal"            # Usa licença gratuita
+        UNITY_VERSION: "6000.0.27f1"
+        PROJECT_PATH: "."
+        BUILD_METHOD: "BuildScript.BuildiOS"
+        XCODE_VERSION: "16.0"
+        UNITY_LICENSE: "personal"
 
     scripts:
       - name: Instalar Unity
