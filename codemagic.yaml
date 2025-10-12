@@ -80,4 +80,3 @@ workflows:
       app_store_connect:
         api_key: codemagic  # Nome da sua chave API
         submit_to_testflight: true  # Ou true para App Store
-        skip_build_processing: true
