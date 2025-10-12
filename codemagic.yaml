@@ -5,13 +5,11 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       vars:
-        UNITY_VERSION: "6000.0.27f1"
-        PROJECT_PATH: "."
+        UNITY_VERSION: "6000.0.27f1"      # versão do Unity 6
+        PROJECT_PATH: "."                 # caminho raiz do projeto
         BUILD_METHOD: "BuildScript.BuildiOS"
         XCODE_VERSION: "16.0"
-      unity:
-        version: 6000.0.27f1
-        licensing: personal
+        UNITY_LICENSE: "personal"         # usa licença gratuita
     scripts:
       - name: Build iOS Project
         script: |
