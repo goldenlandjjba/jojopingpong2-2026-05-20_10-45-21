@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GamePiano.unity
-    guid: cf4cd3374da9fd241ae5a2ef7195d232
+    path: Assets/gAME1.unity
+    guid: 8eb31a1f95e4e874693282abe9cb80ba
+  - enabled: 1
+    path: Assets/Game2.unity
+    guid: 58af74cf5e6684a4ea425955b68d0d74
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 4953ba8f6b2cf114a877e6597814841f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
