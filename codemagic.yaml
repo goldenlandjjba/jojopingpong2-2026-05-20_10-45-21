@@ -1,29 +1,62 @@
 workflows:
   unity_ios_build:
     name: Unity iOS Build
-    max_build_duration: 90
+    max_build_duration: 120  # Aumentei para 120min, Unity 6 pode demorar mais
     instance_type: mac_mini_m1
 
     environment:
+      unity: "6000.0.27f1"  # Isso instala a versão específica!
+      groups:
+        - unity_credentials  # Grupo com email/serial/password da licença
+      ios_signing:  # Config para signing iOS
+        distribution_type: app_store  # Ou 'ad_hoc' para testes
+        bundle_identifier: "com.DorajoVerse.JOJO81"  # Ajuste para o seu (defina no Unity Player Settings)
       vars:
-        UNITY_VERSION: "2022.3.47f1"
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
         XCODE_VERSION: "16.0"
-        UNITY_LICENSE: "personal"
+        UNITY_IOS_DIR: "ios"  # Pasta gerada pelo Unity
+        XCODE_PROJECT: "Unity-iPhone.xcodeproj"
+        XCODE_SCHEME: "Unity-iPhone"
 
     scripts:
-      - name: Build iOS Project
+      - name: Activate Unity License  # Passo novo: Ativa licença
+        script: |
+          echo "🔑 Ativando licença Unity..."
+          $UNITY_HOME/Contents/MacOS/Unity \
+            -batchmode \
+            -quit \
+            -logFile license_log.txt \
+            -serial ${UNITY_SERIAL} \
+            -username ${UNITY_EMAIL} \
+            -password ${UNITY_PASSWORD} \
+            || exit 1
+
+      - name: Build iOS Project  # Seu script corrigido: usa $UNITY_HOME
         script: |
           echo "🔧 Iniciando build Unity iOS..."
-          /Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS/Unity \
+          $UNITY_HOME/Contents/MacOS/Unity \
             -projectPath ${PROJECT_PATH} \
             -executeMethod ${BUILD_METHOD} \
             -buildTarget iOS \
             -quit -batchmode -nographics \
             -logFile build_log.txt || exit 1
+          echo "✅ Projeto Xcode gerado em ${UNITY_IOS_DIR}"
 
-      - name: Verificar resultado
+      - name: Set Build Number  # Novo: Incrementa versão do build
+        script: |
+          cd ${UNITY_IOS_DIR}
+          BUILD_NUMBER=1  # Ou use app-store-connect get-latest... para auto-incremento
+          agvtool new-version -all ${BUILD_NUMBER}
+
+      - name: Build IPA  # Novo: Compila o Xcode para IPA
+        script: |
+          echo "🏗️ Construindo IPA..."
+          xcode-project build-ipa \
+            --project "${UNITY_IOS_DIR}/${XCODE_PROJECT}" \
+            --scheme "${XCODE_SCHEME}"
+
+      - name: Verificar resultado  # Seu script melhorado
         script: |
           echo "🧩 Logs do build Unity:"
           tail -n 50 build_log.txt
@@ -33,6 +66,18 @@ workflows:
             echo "❌ Build Unity iOS falhou."
             exit 1
           fi
+          echo "📦 Verificando IPA: ls -la build/ios/*.ipa"
 
     artifacts:
-      - build/ios
+      build/ios/*.ipa  # Específico para o IPA
+      build/ios/**/*.dSYM  # Debug symbols
+      $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM  # Mais symbols
+
+    publishing:  # Opcional: Envia para TestFlight
+      email:
+        recipients:
+          - rafaoliveirasales2017@gmail.com
+      app_store_connect:
+        api_key: codemagic  # Nome da sua chave API
+        submit_to_testflight: true  # Ou true para App Store
+        skip_build_processing: true
