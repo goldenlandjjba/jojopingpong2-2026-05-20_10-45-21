@@ -8,9 +8,9 @@ workflows:
       unity: "6000.0.27f1"  # Isso instala a versão específica!
       groups:
         - unity_credentials  # Grupo com email/serial/password da licença
-      ios_signing:  # Config para signing iOS
-        distribution_type: app_store  # Ou 'ad_hoc' para testes
-        bundle_identifier: "com.DorajoVerse.JOJO81"  # Ajuste para o seu (defina no Unity Player Settings)
+      #ios_signing:  # Config para signing iOS
+        #distribution_type: app_store  # Ou 'ad_hoc' para testes
+        #bundle_identifier: "com.DorajoVerse.JOJO81"  # Ajuste para o seu (defina no Unity Player Settings)
       vars:
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
