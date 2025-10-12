@@ -15,7 +15,7 @@ workflows:
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
         XCODE_VERSION: "16.0"
-        UNITY_IOS_DIR: "ios"  # Pasta gerada pelo Unity
+        UNITY_IOS_DIR: "build/ios"  # Pasta gerada pelo Unity
         XCODE_PROJECT: "Unity-iPhone.xcodeproj"
         XCODE_SCHEME: "Unity-iPhone"
 
@@ -69,9 +69,9 @@ workflows:
           echo "📦 Verificando IPA: ls -la build/ios/*.ipa"
 
     artifacts:
-      build/ios/*.ipa  # Específico para o IPA
-      build/ios/**/*.dSYM  # Debug symbols
-      $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM  # Mais symbols
+      - build/ios/*.ipa  # Específico para o IPA
+      - build/ios/**/*.dSYM  # Debug symbols
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM  # Mais symbols
 
     publishing:  # Opcional: Envia para TestFlight
       email:
