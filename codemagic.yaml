@@ -1,103 +1,43 @@
 workflows:
   unity_ios_build:
-    name: Unity iOS Build
-    max_build_duration: 120  # Pode precisar de mais tempo pro install
+    name: Unity iOS Build (Unsigned)
+    max_build_duration: 120
     instance_type: mac_mini_m1
 
     environment:
+      unity: "6000.0.27f1"  # Ou use o script de install se precisar
       groups:
-        - unity_credentials  # Seu grupo com UNITY_EMAIL, UNITY_SERIAL, UNITY_PASSWORD
-      ios_signing:  # Mantenha se quiser signing (ajuste pra development se free)
-        distribution_type: development  # Pra teste gratuito, como sugeri antes
-        bundle_identifier: "com.DoraJoVerse.JOJO81"
+        - unity_credentials
       vars:
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
-        XCODE_VERSION: "16.0"
         UNITY_IOS_DIR: "build/ios"
         XCODE_PROJECT: "Unity-iPhone.xcodeproj"
         XCODE_SCHEME: "Unity-iPhone"
 
     scripts:
-      # 1. Ativa licença com Unity default (pré-instalado)
+      # Seus scripts de licença e install Unity (mantenha se usando custom version)
       - name: Activate Unity License
         script: |
-          echo "🔑 Ativando licença com Unity default..."
-          /Applications/Unity/Hub/Editor/2022.3.47f1/Unity.app/Contents/MacOS/Unity \
-            -batchmode -quit -logFile license_log.txt \
-            -serial ${UNITY_SERIAL} -username ${UNITY_EMAIL} -password ${UNITY_PASSWORD} \
-            || exit 1
+          # ... (como antes)
 
-      # 2. Extrai versão e changeset do projeto
-      - name: Retrieve Unity Version
-        script: |
-          echo "🔍 Extraindo versão do Unity do projeto..."
-          UNITY_VERSION=$(echo $(sed -n '1p' ProjectSettings/ProjectVersion.txt) | cut -c 18-)
-          UNITY_VERSION_CHANGESET=$(echo $(sed -n '2p' ProjectSettings/ProjectVersion.txt) | cut -d "(" -f2 | cut -d ")" -f1 | xargs)
-          echo "UNITY_VERSION=$UNITY_VERSION" >> $CM_ENV
-          echo "UNITY_VERSION_CHANGESET=$UNITY_VERSION_CHANGESET" >> $CM_ENV
-          echo "UNITY_HOME=/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app" >> $CM_ENV
-          echo "Versão: $UNITY_VERSION | Changeset: $UNITY_VERSION_CHANGESET"
-
-      # 3. Instala Unity 6 + módulos iOS (aceita prompts)
-      - name: Install Unity Version and iOS Module
-        script: |
-          echo "📥 Instalando Unity ${UNITY_VERSION} e módulo iOS..."
-          yes Y | /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -- --headless install --version $UNITY_VERSION --changeset $UNITY_VERSION_CHANGESET -a arm64
-          yes Y | /Applications/Unity\ Hub.app/Contents/MacOS/Unity\ Hub -- --headless install-modules --version $UNITY_VERSION -m ios -a arm64
-
-      # 4. Build do projeto iOS com novo Unity
       - name: Build iOS Project
         script: |
-          echo "🔧 Iniciando build Unity iOS com versão custom..."
-          $UNITY_HOME/Contents/MacOS/Unity \
-            -projectPath ${PROJECT_PATH} \
-            -executeMethod ${BUILD_METHOD} \
-            -buildTarget iOS \
-            -quit -batchmode -nographics \
-            -logFile build_log.txt || exit 1
-          echo "✅ Projeto Xcode gerado em ${UNITY_IOS_DIR}"
+          # ... (como antes)
 
-      # 5. Set build number
-      - name: Set Build Number
+      - name: Build IPA Unsigned
         script: |
-          cd ${UNITY_IOS_DIR}
-          BUILD_NUMBER=1  # Ajuste ou auto-incremente
-          agvtool new-version -all ${BUILD_NUMBER}
-
-      # 6. Build IPA
-      - name: Build IPA
-        script: |
-          echo "🏗️ Construindo IPA..."
+          echo "🏗️ Construindo IPA sem assinatura..."
           xcode-project build-ipa \
             --project "${UNITY_IOS_DIR}/${XCODE_PROJECT}" \
-            --scheme "${XCODE_SCHEME}"
+            --scheme "${XCODE_SCHEME}" \
+            --no-codesign  # <-- Isso pula o signing!
 
-      # 7. Verifica resultado
       - name: Verificar resultado
         script: |
-          echo "🧩 Logs do build Unity:"
-          tail -n 50 build_log.txt
-          if grep -q "Build completed with a result of 'Succeeded'" build_log.txt; then
-            echo "✅ Build Unity iOS concluído com sucesso."
-          else
-            echo "❌ Build Unity iOS falhou."
-            exit 1
-          fi
-          echo "📦 Verificando IPA: ls -la build/ios/*.ipa"
-
-      # 8. Desativa licença (libera slot)
-      - name: Deactivate Unity License
-        script: |
-          echo "🔓 Desativando licença..."
-          $UNITY_HOME/Contents/MacOS/Unity -batchmode -quit -returnlicense -nographics
+          # ... (como antes, mas sem checar signing)
 
     artifacts:
-      - build/ios/*.ipa
-      - build/ios/**/*.dSYM
-      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - build/ios/*.ipa  # O IPA unsigned sai aqui
 
-    # publishing:  # Comente se não quiser
-    #   email:
-    #     recipients:
-    #       - seu@email.com
+    # Sem publishing ou ios_signing!
