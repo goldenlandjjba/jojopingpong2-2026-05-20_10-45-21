@@ -1,23 +1,29 @@
 workflows:
   unity_ios_build:
     name: Unity iOS Build
-    max_build_duration: 60
+    max_build_duration: 90
     instance_type: mac_mini_m1
     environment:
       vars:
-        UNITY_VERSION: "2021.3.10f1" # 🔁 Troque depois de confirmar a versão disponível no Codemagic
-        PROJECT_PATH: "."           # pasta raiz do projeto
+        UNITY_VERSION: "6000.0.27f1" # Versão específica do Unity 6
+        PROJECT_PATH: "."            # Pasta raiz do projeto
         BUILD_METHOD: "BuildScript.BuildiOS"
-      xcode: 15.0
+      xcode: 16.0                  # Versão recomendada para Unity 6
+      UNITY_LICENSE: $UNITY_LICENSE
     scripts:
-      - name: Mostrar versões do Unity instaladas
+      - name: Instalar Unity 6
         script: |
-          ls /Applications/Unity/Hub/Editor || echo "⚠️ Nenhuma versão Unity encontrada"
+          if [ ! -d "/Applications/Unity/Hub/Editor/${UNITY_VERSION}" ]; then
+            echo "Instalando Unity ${UNITY_VERSION}..."
+            unity_hub -- --headless install --version ${UNITY_VERSION} --module ios
+          else
+            echo "Unity ${UNITY_VERSION} já instalado."
+          fi
 
       - name: Verificar se Unity existe
         script: |
           if [ ! -f "/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS/Unity" ]; then
-            echo "❌ Unity ${UNITY_VERSION} não encontrado! Veja acima e troque no arquivo YAML."
+            echo "❌ Unity ${UNITY_VERSION} não encontrado!"
             exit 1
           else
             echo "✅ Unity encontrado: ${UNITY_VERSION}"
@@ -32,6 +38,22 @@ workflows:
             -projectPath "${PROJECT_PATH}" \
             -executeMethod "${BUILD_METHOD}" \
             -buildTarget iOS
+
+      - name: Criar ExportOptions.plist
+        script: |
+          mkdir -p build/ios
+          cat > build/ios/ExportOptions.plist << EOL
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+            <key>teamID</key>
+            <string>SEU_TEAM_ID</string> # Substitua pelo seu Apple Developer Team ID
+          </dict>
+          </plist>
+          EOL
 
       - name: Fazer build do Xcode (gera IPA)
         script: |
@@ -48,10 +70,9 @@ workflows:
             -exportOptionsPlist ExportOptions.plist
 
     artifacts:
-      - build/ios
-      - build/ios/build/ipa/*.ipa
+      - build/ios/**/*.ipa
 
     publishing:
       email:
         recipients:
-          - "rafaoliveirasales2017@gmail.com"
+          - "rafaoliveirasales2017@gmail.com" # Substitua pelo seu e-mail
