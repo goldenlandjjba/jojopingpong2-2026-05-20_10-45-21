@@ -5,7 +5,7 @@ workflows:
     instance_type: mac_mini_m1
 
     environment:
-      unity: "6000.0.27f1"  # Ou use o script de install se precisar
+      unity: "2023.1.10f1"  # Ou use o script de install se precisar
       groups:
         - unity_credentials
       vars:
