@@ -5,7 +5,7 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       vars:
-        UNITY_VERSION: "2022.3.5f1" # 🔁 Troque depois de confirmar a versão disponível no Codemagic
+        UNITY_VERSION: "2021.3.10f1" # 🔁 Troque depois de confirmar a versão disponível no Codemagic
         PROJECT_PATH: "."           # pasta raiz do projeto
         BUILD_METHOD: "BuildScript.BuildiOS"
       xcode: 15.0
