@@ -1,18 +1,18 @@
 workflows:
   unity-ios:
-    name: Build Unity iOS (Unity 6 via Docker)
+    name: Unity iOS Build
     environment:
-      docker: unityci/editor:6000.0.27f1-ios-3.1.0
       vars:
-        UNITY_PROJECT_PATH: .
+        UNITY_VERSION: "6000.0.27f1"
     scripts:
-      - name: Build iOS Project
+      - name: Build Unity iOS Project
         script: |
-          echo "🚀 Running Unity iOS build inside Docker..."
-          unity-editor \
-            -batchmode -nographics -quit \
-            -projectPath $UNITY_PROJECT_PATH \
-            -executeMethod BuildScript.BuildiOS \
-            -logFile unity_build.log
+          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+            -batchmode \
+            -nographics \
+            -quit \
+            -projectPath . \
+            -buildTarget iOS \
+            -executeMethod BuildScript.BuildiOS
     artifacts:
-      - build/ios
+      - build/ios/**
