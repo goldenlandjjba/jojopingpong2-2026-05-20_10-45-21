@@ -1,18 +1,57 @@
 workflows:
-  unity-ios:
+  unity_ios_build:
     name: Unity iOS Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
     environment:
       vars:
-        UNITY_VERSION: "2021.3.10f1"
+        UNITY_VERSION: "2022.3.5f1" # 🔁 Troque depois de confirmar a versão disponível no Codemagic
+        PROJECT_PATH: "."           # pasta raiz do projeto
+        BUILD_METHOD: "BuildScript.BuildiOS"
+      xcode: 15.0
     scripts:
-      - name: Build Unity iOS Project
+      - name: Mostrar versões do Unity instaladas
         script: |
-          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+          ls /Applications/Unity/Hub/Editor || echo "⚠️ Nenhuma versão Unity encontrada"
+
+      - name: Verificar se Unity existe
+        script: |
+          if [ ! -f "/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS/Unity" ]; then
+            echo "❌ Unity ${UNITY_VERSION} não encontrado! Veja acima e troque no arquivo YAML."
+            exit 1
+          else
+            echo "✅ Unity encontrado: ${UNITY_VERSION}"
+          fi
+
+      - name: Fazer build do projeto Unity para iOS
+        script: |
+          /Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS/Unity \
             -batchmode \
             -nographics \
             -quit \
-            -projectPath . \
-            -buildTarget iOS \
-            -executeMethod BuildScript.BuildiOS
+            -projectPath "${PROJECT_PATH}" \
+            -executeMethod "${BUILD_METHOD}" \
+            -buildTarget iOS
+
+      - name: Fazer build do Xcode (gera IPA)
+        script: |
+          cd build/ios || exit 1
+          xcodebuild \
+            -scheme Unity-iPhone \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath build/UnityiOS.xcarchive archive
+          xcodebuild \
+            -exportArchive \
+            -archivePath build/UnityiOS.xcarchive \
+            -exportPath build/ipa \
+            -exportOptionsPlist ExportOptions.plist
+
     artifacts:
-      - build/ios/**
+      - build/ios
+      - build/ios/build/ipa/*.ipa
+
+    publishing:
+      email:
+        recipients:
+          - "rafaoliveirasales2017@gmail.com"
