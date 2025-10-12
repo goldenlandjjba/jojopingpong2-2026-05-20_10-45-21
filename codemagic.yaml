@@ -13,17 +13,6 @@ workflows:
         UNITY_LICENSE: "personal"
 
     scripts:
-      - name: Instalar Unity
-        script: |
-          echo "🔽 Verificando se Unity ${UNITY_VERSION} está instalado..."
-          UNITY_PATH="/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS/Unity"
-          if [ ! -f "$UNITY_PATH" ]; then
-            echo "🚀 Instalando Unity ${UNITY_VERSION}..."
-            unity-hub install --version ${UNITY_VERSION} --modules ios
-          else
-            echo "✅ Unity ${UNITY_VERSION} já está instalado."
-          fi
-
       - name: Build iOS Project
         script: |
           echo "🔧 Iniciando build Unity iOS..."
@@ -32,12 +21,12 @@ workflows:
             -executeMethod ${BUILD_METHOD} \
             -buildTarget iOS \
             -quit -batchmode -nographics \
-            -logFile build_log.txt
+            -logFile build_log.txt || exit 1
 
       - name: Verificar resultado
         script: |
           echo "🧩 Logs do build Unity:"
-          cat build_log.txt | tail -n 50
+          tail -n 50 build_log.txt
           if grep -q "Build completed with a result of 'Succeeded'" build_log.txt; then
             echo "✅ Build Unity iOS concluído com sucesso."
           else
