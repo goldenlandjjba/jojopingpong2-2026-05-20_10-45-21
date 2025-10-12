@@ -1,0 +1,18 @@
+workflows:
+  unity-ios:
+    name: Unity iOS Build
+    environment:
+      vars:
+        UNITY_VERSION: "2021.3.16f1"
+    scripts:
+      - name: Build Unity iOS Project
+        script: |
+          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+            -batchmode \
+            -nographics \
+            -quit \
+            -projectPath . \
+            -buildTarget iOS \
+            -executeMethod BuildScript.BuildiOS
+    artifacts:
+      - build/ios/**
