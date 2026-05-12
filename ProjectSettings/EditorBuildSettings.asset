@@ -12,7 +12,8 @@ EditorBuildSettings:
     path: Assets/Game2.unity
     guid: 58af74cf5e6684a4ea425955b68d0d74
   m_configObjects:
+    UnityEditor.XR.VisionOS.VisionOSSettings: {fileID: 11400000, guid: 80cbc5bc4276f2b40886c46d1bd80808, type: 2}
     com.unity.addressableassets: {fileID: 11400000, guid: 4953ba8f6b2cf114a877e6597814841f, type: 2}
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 0eef4da6304b7944aad4459e044e0811, type: 3}
     com.unity.localization.settings: {fileID: 11400000, guid: a4a2c5f57fde4964aaad5d7a2d30f5a6, type: 2}
-  m_UseUCBPForAssetBundles: 0
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 6879e009004fe4d4e8964fe428308984, type: 2}

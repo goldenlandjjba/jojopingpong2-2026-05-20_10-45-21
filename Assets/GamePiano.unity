@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 11140516}
   - component: {fileID: 11140515}
   - component: {fileID: 11140514}
+  - component: {fileID: 11140517}
   m_Layer: 5
   m_Name: Notee (14)
   m_TagString: Untagged
@@ -383,6 +384,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11140512}
   m_CullTransparentMesh: 1
+--- !u!114 &11140517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11140512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &29490230
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +411,7 @@ GameObject:
   - component: {fileID: 29490234}
   - component: {fileID: 29490233}
   - component: {fileID: 29490232}
+  - component: {fileID: 29490235}
   m_Layer: 5
   m_Name: Notee (19)
   m_TagString: Untagged
@@ -527,6 +544,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 29490230}
   m_CullTransparentMesh: 1
+--- !u!114 &29490235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29490230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &30856133
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,6 +703,7 @@ GameObject:
   - component: {fileID: 55152944}
   - component: {fileID: 55152943}
   - component: {fileID: 55152942}
+  - component: {fileID: 55152945}
   m_Layer: 5
   m_Name: Notee1 (4)
   m_TagString: Untagged
@@ -791,6 +824,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55152940}
   m_CullTransparentMesh: 1
+--- !u!114 &55152945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55152940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &60524620
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,6 +960,7 @@ GameObject:
   - component: {fileID: 147249963}
   - component: {fileID: 147249962}
   - component: {fileID: 147249961}
+  - component: {fileID: 147249964}
   m_Layer: 5
   m_Name: Notee1 (18)
   m_TagString: Untagged
@@ -1032,6 +1081,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 147249959}
   m_CullTransparentMesh: 1
+--- !u!114 &147249964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147249959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: B
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &162627100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,6 +1108,7 @@ GameObject:
   - component: {fileID: 162627104}
   - component: {fileID: 162627103}
   - component: {fileID: 162627102}
+  - component: {fileID: 162627105}
   m_Layer: 5
   m_Name: Notee1 (10)
   m_TagString: Untagged
@@ -1164,6 +1229,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162627100}
   m_CullTransparentMesh: 1
+--- !u!114 &162627105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162627100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: E
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &200137521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,6 +1292,7 @@ GameObject:
   - component: {fileID: 200172635}
   - component: {fileID: 200172634}
   - component: {fileID: 200172633}
+  - component: {fileID: 200172636}
   m_Layer: 5
   m_Name: Notee1 (11)
   m_TagString: Untagged
@@ -1332,6 +1413,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200172631}
   m_CullTransparentMesh: 1
+--- !u!114 &200172636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200172631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &221419872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,6 +1572,7 @@ GameObject:
   - component: {fileID: 241532141}
   - component: {fileID: 241532140}
   - component: {fileID: 241532139}
+  - component: {fileID: 241532142}
   m_Layer: 5
   m_Name: Notee1 (6)
   m_TagString: Untagged
@@ -1596,6 +1693,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 241532137}
   m_CullTransparentMesh: 1
+--- !u!114 &241532142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241532137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: E
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &271002694
 GameObject:
   m_ObjectHideFlags: 0
@@ -1645,6 +1757,7 @@ GameObject:
   - component: {fileID: 319828309}
   - component: {fileID: 319828308}
   - component: {fileID: 319828307}
+  - component: {fileID: 319828310}
   m_Layer: 5
   m_Name: Notee1 (23)
   m_TagString: Untagged
@@ -1765,95 +1878,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319828305}
   m_CullTransparentMesh: 1
---- !u!1001 &348341410
-PrefabInstance:
+--- !u!114 &319828310
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 4.5355
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4.5355
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 4.5355
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.34
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.05
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -8.828
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.12241884
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.99247855
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 194.063
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6652725513331149018, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: d199f14a7f3034346b742580da5e40eb, type: 2}
-    - target: {fileID: -4157524182732408741, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 4e72d65816ecbde41a9c254c83155f56, type: 2}
-    - target: {fileID: 919132149155446097, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_Name
-      value: lornaandpiano
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1525539152500033246, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 790bd324eea9ff944885e06eb47f7213, type: 2}
-    - target: {fileID: 8151023354082563727, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: c7af68c527210ed45855740b69ce7b43, type: 2}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 96a1561f53b42e440b0da35e499b2942, type: 3}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319828305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &378727261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,6 +2037,7 @@ GameObject:
   - component: {fileID: 386136183}
   - component: {fileID: 386136182}
   - component: {fileID: 386136181}
+  - component: {fileID: 386136184}
   m_Layer: 5
   m_Name: Notee (2)
   m_TagString: Untagged
@@ -2118,6 +2158,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386136179}
   m_CullTransparentMesh: 1
+--- !u!114 &386136184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386136179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &407730064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,6 +2357,7 @@ GameObject:
   - component: {fileID: 458354432}
   - component: {fileID: 458354431}
   - component: {fileID: 458354430}
+  - component: {fileID: 458354433}
   m_Layer: 5
   m_Name: Notee (1)
   m_TagString: Untagged
@@ -2422,6 +2478,100 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458354428}
   m_CullTransparentMesh: 1
+--- !u!114 &458354433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458354428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+--- !u!1 &520655838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 520655839}
+  - component: {fileID: 520655840}
+  - component: {fileID: 520655841}
+  m_Layer: 5
+  m_Name: Text (Legacy)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &520655839
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520655838}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 992861639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -262, y: 0.0000085831}
+  m_SizeDelta: {x: 1685.618, y: 247.816}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &520655840
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520655838}
+  m_CullTransparentMesh: 1
+--- !u!114 &520655841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520655838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.7858338, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 55dee07f2bf88d248b8c2740a43c08c9, type: 3}
+    m_FontSize: 121
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 248
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 3.13
+  m_Text: New Text
 --- !u!1 &544382109
 GameObject:
   m_ObjectHideFlags: 0
@@ -2434,6 +2584,7 @@ GameObject:
   - component: {fileID: 544382113}
   - component: {fileID: 544382112}
   - component: {fileID: 544382111}
+  - component: {fileID: 544382114}
   m_Layer: 5
   m_Name: Notee (12)
   m_TagString: Untagged
@@ -2554,6 +2705,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 544382109}
   m_CullTransparentMesh: 1
+--- !u!114 &544382114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544382109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &640399260
 GameObject:
   m_ObjectHideFlags: 0
@@ -2698,6 +2864,7 @@ GameObject:
   - component: {fileID: 661635392}
   - component: {fileID: 661635391}
   - component: {fileID: 661635390}
+  - component: {fileID: 661635393}
   m_Layer: 5
   m_Name: Notee (6)
   m_TagString: Untagged
@@ -2818,6 +2985,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661635388}
   m_CullTransparentMesh: 1
+--- !u!114 &661635393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661635388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &670213497
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,6 +3012,7 @@ GameObject:
   - component: {fileID: 670213501}
   - component: {fileID: 670213500}
   - component: {fileID: 670213499}
+  - component: {fileID: 670213502}
   m_Layer: 5
   m_Name: Notee (8)
   m_TagString: Untagged
@@ -2950,6 +3133,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670213497}
   m_CullTransparentMesh: 1
+--- !u!114 &670213502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670213497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &670506875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2962,6 +3160,7 @@ GameObject:
   - component: {fileID: 670506879}
   - component: {fileID: 670506878}
   - component: {fileID: 670506877}
+  - component: {fileID: 670506880}
   m_Layer: 5
   m_Name: Notee (18)
   m_TagString: Untagged
@@ -3094,6 +3293,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670506875}
   m_CullTransparentMesh: 1
+--- !u!114 &670506880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670506875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &673250381
 GameObject:
   m_ObjectHideFlags: 0
@@ -3825,6 +4039,7 @@ GameObject:
   - component: {fileID: 888693060}
   - component: {fileID: 888693059}
   - component: {fileID: 888693058}
+  - component: {fileID: 888693061}
   m_Layer: 5
   m_Name: Notee (9)
   m_TagString: Untagged
@@ -3945,6 +4160,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 888693056}
   m_CullTransparentMesh: 1
+--- !u!114 &888693061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888693056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &897621035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3957,6 +4187,7 @@ GameObject:
   - component: {fileID: 897621039}
   - component: {fileID: 897621038}
   - component: {fileID: 897621037}
+  - component: {fileID: 897621040}
   m_Layer: 5
   m_Name: Notee1
   m_TagString: Untagged
@@ -4077,6 +4308,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897621035}
   m_CullTransparentMesh: 1
+--- !u!114 &897621040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 897621035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &904284017
 GameObject:
   m_ObjectHideFlags: 0
@@ -4089,6 +4335,7 @@ GameObject:
   - component: {fileID: 904284021}
   - component: {fileID: 904284020}
   - component: {fileID: 904284019}
+  - component: {fileID: 904284022}
   m_Layer: 5
   m_Name: Notee1 (22)
   m_TagString: Untagged
@@ -4209,6 +4456,100 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904284017}
   m_CullTransparentMesh: 1
+--- !u!114 &904284022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904284017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: E
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+--- !u!1 &922259746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 922259749}
+  - component: {fileID: 922259748}
+  - component: {fileID: 922259747}
+  m_Layer: 5
+  m_Name: Text (Legacy) (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &922259747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922259746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 1, b: 0.14640617, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 55dee07f2bf88d248b8c2740a43c08c9, type: 3}
+    m_FontSize: 66
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 248
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &922259748
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922259746}
+  m_CullTransparentMesh: 1
+--- !u!224 &922259749
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922259746}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 992861639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -262, y: -149}
+  m_SizeDelta: {x: 1685.618, y: 162.847}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &922558940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4353,6 +4694,7 @@ GameObject:
   - component: {fileID: 924040116}
   - component: {fileID: 924040115}
   - component: {fileID: 924040114}
+  - component: {fileID: 924040117}
   m_Layer: 5
   m_Name: Notee (4)
   m_TagString: Untagged
@@ -4473,6 +4815,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924040112}
   m_CullTransparentMesh: 1
+--- !u!114 &924040117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924040112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &928887245
 GameObject:
   m_ObjectHideFlags: 0
@@ -4992,6 +5349,7 @@ GameObject:
   - component: {fileID: 981998574}
   - component: {fileID: 981998573}
   - component: {fileID: 981998572}
+  - component: {fileID: 981998575}
   m_Layer: 5
   m_Name: Notee1 (16)
   m_TagString: Untagged
@@ -5112,6 +5470,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 981998570}
   m_CullTransparentMesh: 1
+--- !u!114 &981998575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981998570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: E
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &992861638
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,7 +5514,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 520655839}
+  - {fileID: 922259749}
   m_Father: {fileID: 1812929453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5162,7 +5537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.1354026, g: 0, b: 0.4528302, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5341,7 +5716,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1405870759}
   m_HandleRect: {fileID: 1405870758}
   m_Direction: 0
-  m_Value: 0.00000019202123
+  m_Value: 0.00000014401593
   m_Size: 0.33081406
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5397,6 +5772,7 @@ GameObject:
   - component: {fileID: 1021585626}
   - component: {fileID: 1021585625}
   - component: {fileID: 1021585624}
+  - component: {fileID: 1021585627}
   m_Layer: 5
   m_Name: Notee1 (17)
   m_TagString: Untagged
@@ -5517,6 +5893,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021585622}
   m_CullTransparentMesh: 1
+--- !u!114 &1021585627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021585622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1056117862
 GameObject:
   m_ObjectHideFlags: 0
@@ -5529,6 +5920,7 @@ GameObject:
   - component: {fileID: 1056117866}
   - component: {fileID: 1056117865}
   - component: {fileID: 1056117864}
+  - component: {fileID: 1056117867}
   m_Layer: 5
   m_Name: Notee (13)
   m_TagString: Untagged
@@ -5649,6 +6041,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056117862}
   m_CullTransparentMesh: 1
+--- !u!114 &1056117867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056117862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1071134025
 GameObject:
   m_ObjectHideFlags: 0
@@ -5661,6 +6068,7 @@ GameObject:
   - component: {fileID: 1071134029}
   - component: {fileID: 1071134028}
   - component: {fileID: 1071134027}
+  - component: {fileID: 1071134030}
   m_Layer: 5
   m_Name: Notee1 (8)
   m_TagString: Untagged
@@ -5781,6 +6189,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1071134025}
   m_CullTransparentMesh: 1
+--- !u!114 &1071134030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071134025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1104001053
 GameObject:
   m_ObjectHideFlags: 0
@@ -6051,7 +6474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1111995511}
-  - component: {fileID: 1111995510}
+  - component: {fileID: 1111995512}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -6059,21 +6482,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1111995510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1111995509}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fce76c432a7ef5e429b0bcdc02dd4add, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instrumentDropdown: {fileID: 431725447}
-  grandPiano: {fileID: 1448994642}
-  steelDrum: {fileID: 962215241}
 --- !u!4 &1111995511
 Transform:
   m_ObjectHideFlags: 0
@@ -6089,6 +6497,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1111995512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111995509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a297db28ddf420e47a6523d949bb5385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tituloDaLicao: "Acorde de Mi Maior (Tema da L\xF4rna)"
+  notasNecessarias:
+  - E
+  - G#
+  - B
+  progressoTecnicoGanhado: 0.2
+  displayLicao: {fileID: 520655841}
+  displayNotas: {fileID: 922259747}
+  flashFeedback: {fileID: 0}
+  audioSource: {fileID: 1108618338}
+  notasAudioClips:
+  - {fileID: 8300000, guid: 45b992520d0c330439142eb62176dfe2, type: 3}
+  - {fileID: 8300000, guid: 3989f9dceb6d120428a68767b9eeb178, type: 3}
+  - {fileID: 8300000, guid: 00ca8f2f1eb8b304bbc62aef162cdb68, type: 3}
+  - {fileID: 8300000, guid: 2227095b65d47da4c8a45a1ecc806164, type: 3}
+  - {fileID: 8300000, guid: 7831088078e08254786885b982cb7827, type: 3}
+  - {fileID: 8300000, guid: c17975ae511d2f6449054fa3dabcec75, type: 3}
+  - {fileID: 8300000, guid: bd9341cd84b26f14582f828f763a8610, type: 3}
+  - {fileID: 8300000, guid: dac3ac9562763b94e8d316d17d5ba79c, type: 3}
+  - {fileID: 8300000, guid: e018c4261b5b21744821463e93947203, type: 3}
+  - {fileID: 8300000, guid: ccee24c49fd370a439d1eb63d7efe306, type: 3}
+  - {fileID: 8300000, guid: 05cd4926a7e61944daafb7063d1d6382, type: 3}
+  - {fileID: 8300000, guid: 1cfa9cc82b3ee8a47bb99df00f1abe09, type: 3}
+  - {fileID: 8300000, guid: f0aa4393e2af26047adc7fda945405da, type: 3}
+  - {fileID: 8300000, guid: c129719f23e9e6a49a6608d8a6da0374, type: 3}
+  - {fileID: 8300000, guid: 8e4f7e53003c7b64ea534f8017428d2f, type: 3}
+  - {fileID: 8300000, guid: 207fd388f2eed744e870643e97a6782b, type: 3}
+  - {fileID: 8300000, guid: 62dab5a25416eed4eb4703258d716d2d, type: 3}
+  - {fileID: 8300000, guid: 8e251b82f8c7b784abf2e2abc4987b8e, type: 3}
+  - {fileID: 8300000, guid: cc229bde99e554046903871f9ecfcac7, type: 3}
+  - {fileID: 8300000, guid: 7863a927d654f4649970381c9cd1f28b, type: 3}
+  - {fileID: 8300000, guid: a8ba9a8f3be91844fba22de4b2fb6391, type: 3}
+  - {fileID: 8300000, guid: db80cbeae137fa24c802c46e8abbf579, type: 3}
+  - {fileID: 8300000, guid: 62b0ca3e67905a64ca8e1a10e5942080, type: 3}
+  - {fileID: 8300000, guid: ab3535c73617de845939e62806a38664, type: 3}
 --- !u!1 &1119128822
 GameObject:
   m_ObjectHideFlags: 0
@@ -6176,6 +6631,7 @@ GameObject:
   - component: {fileID: 1133869646}
   - component: {fileID: 1133869645}
   - component: {fileID: 1133869644}
+  - component: {fileID: 1133869647}
   m_Layer: 5
   m_Name: Notee1 (2)
   m_TagString: Untagged
@@ -6296,6 +6752,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1133869642}
   m_CullTransparentMesh: 1
+--- !u!114 &1133869647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133869642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1151637444
 GameObject:
   m_ObjectHideFlags: 0
@@ -6308,6 +6779,7 @@ GameObject:
   - component: {fileID: 1151637448}
   - component: {fileID: 1151637447}
   - component: {fileID: 1151637446}
+  - component: {fileID: 1151637449}
   m_Layer: 5
   m_Name: Notee1 (25)
   m_TagString: Untagged
@@ -6428,6 +6900,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151637444}
   m_CullTransparentMesh: 1
+--- !u!114 &1151637449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151637444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: B
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1185382741
 GameObject:
   m_ObjectHideFlags: 0
@@ -6440,6 +6927,7 @@ GameObject:
   - component: {fileID: 1185382745}
   - component: {fileID: 1185382744}
   - component: {fileID: 1185382743}
+  - component: {fileID: 1185382746}
   m_Layer: 5
   m_Name: Notee (16)
   m_TagString: Untagged
@@ -6560,6 +7048,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1185382741}
   m_CullTransparentMesh: 1
+--- !u!114 &1185382746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185382741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1192473506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6572,6 +7075,7 @@ GameObject:
   - component: {fileID: 1192473510}
   - component: {fileID: 1192473509}
   - component: {fileID: 1192473508}
+  - component: {fileID: 1192473511}
   m_Layer: 5
   m_Name: Notee1 (19)
   m_TagString: Untagged
@@ -6692,6 +7196,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1192473506}
   m_CullTransparentMesh: 1
+--- !u!114 &1192473511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192473506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1198273081
 GameObject:
   m_ObjectHideFlags: 0
@@ -6704,6 +7223,7 @@ GameObject:
   - component: {fileID: 1198273085}
   - component: {fileID: 1198273084}
   - component: {fileID: 1198273083}
+  - component: {fileID: 1198273086}
   m_Layer: 5
   m_Name: Notee1 (7)
   m_TagString: Untagged
@@ -6824,6 +7344,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1198273081}
   m_CullTransparentMesh: 1
+--- !u!114 &1198273086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198273081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1200450478
 GameObject:
   m_ObjectHideFlags: 0
@@ -7523,6 +8058,7 @@ GameObject:
   - component: {fileID: 1357530868}
   - component: {fileID: 1357530867}
   - component: {fileID: 1357530866}
+  - component: {fileID: 1357530869}
   m_Layer: 5
   m_Name: Notee (5)
   m_TagString: Untagged
@@ -7643,6 +8179,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357530864}
   m_CullTransparentMesh: 1
+--- !u!114 &1357530869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357530864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1360019721
 GameObject:
   m_ObjectHideFlags: 0
@@ -7787,6 +8338,7 @@ GameObject:
   - component: {fileID: 1365986432}
   - component: {fileID: 1365986431}
   - component: {fileID: 1365986430}
+  - component: {fileID: 1365986433}
   m_Layer: 5
   m_Name: Notee1 (14)
   m_TagString: Untagged
@@ -7907,6 +8459,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365986428}
   m_CullTransparentMesh: 1
+--- !u!114 &1365986433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365986428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1381054720
 GameObject:
   m_ObjectHideFlags: 0
@@ -7919,6 +8486,7 @@ GameObject:
   - component: {fileID: 1381054724}
   - component: {fileID: 1381054723}
   - component: {fileID: 1381054722}
+  - component: {fileID: 1381054725}
   m_Layer: 5
   m_Name: Notee1 (12)
   m_TagString: Untagged
@@ -8039,6 +8607,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381054720}
   m_CullTransparentMesh: 1
+--- !u!114 &1381054725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381054720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1405870757
 GameObject:
   m_ObjectHideFlags: 0
@@ -8126,6 +8709,7 @@ GameObject:
   - component: {fileID: 1427872493}
   - component: {fileID: 1427872492}
   - component: {fileID: 1427872491}
+  - component: {fileID: 1427872494}
   m_Layer: 5
   m_Name: Notee1 (20)
   m_TagString: Untagged
@@ -8246,6 +8830,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427872489}
   m_CullTransparentMesh: 1
+--- !u!114 &1427872494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427872489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1427963070
 GameObject:
   m_ObjectHideFlags: 0
@@ -8258,6 +8857,7 @@ GameObject:
   - component: {fileID: 1427963074}
   - component: {fileID: 1427963073}
   - component: {fileID: 1427963072}
+  - component: {fileID: 1427963075}
   m_Layer: 5
   m_Name: Notee1 (21)
   m_TagString: Untagged
@@ -8378,6 +8978,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427963070}
   m_CullTransparentMesh: 1
+--- !u!114 &1427963075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427963070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1444930590
 GameObject:
   m_ObjectHideFlags: 0
@@ -8606,7 +9221,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1467193167}
-  - component: {fileID: 1467193166}
   m_Layer: 0
   m_Name: Video Player
   m_TagString: Untagged
@@ -8614,40 +9228,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!328 &1467193166
-VideoPlayer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467193165}
-  m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 3a2bbbff4e088b24e8d6c5b7274ab8ab, type: 3}
-  m_TargetCameraAlpha: 1
-  m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: 0282619eeafa88846a966079e041021f, type: 2}
-  m_TimeReference: 0
-  m_TargetMaterialRenderer: {fileID: 0}
-  m_TargetMaterialProperty: <noninit>
-  m_RenderMode: 2
-  m_AspectRatio: 2
-  m_DataSource: 0
-  m_TimeUpdateMode: 2
-  m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
-  m_TargetAudioSources: []
-  m_DirectAudioVolumes: []
-  m_Url: 
-  m_EnabledAudioTracks: 
-  m_DirectAudioMutes: 
-  m_ControlledAudioTrackCount: 0
-  m_PlayOnAwake: 1
-  m_SkipOnDrop: 1
-  m_Looping: 1
-  m_WaitForFirstFrame: 1
-  m_FrameReadyEventEnabled: 0
-  m_VideoShaders: []
 --- !u!4 &1467193167
 Transform:
   m_ObjectHideFlags: 0
@@ -8675,6 +9255,7 @@ GameObject:
   - component: {fileID: 1553699747}
   - component: {fileID: 1553699746}
   - component: {fileID: 1553699745}
+  - component: {fileID: 1553699748}
   m_Layer: 5
   m_Name: Notee1 (24)
   m_TagString: Untagged
@@ -8795,6 +9376,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553699743}
   m_CullTransparentMesh: 1
+--- !u!114 &1553699748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553699743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1559796724
 GameObject:
   m_ObjectHideFlags: 0
@@ -8807,6 +9403,7 @@ GameObject:
   - component: {fileID: 1559796728}
   - component: {fileID: 1559796727}
   - component: {fileID: 1559796726}
+  - component: {fileID: 1559796729}
   m_Layer: 5
   m_Name: Notee (15)
   m_TagString: Untagged
@@ -8927,6 +9524,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1559796724}
   m_CullTransparentMesh: 1
+--- !u!114 &1559796729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559796724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1588484110
 GameObject:
   m_ObjectHideFlags: 0
@@ -8975,6 +9587,7 @@ GameObject:
   - component: {fileID: 1629977448}
   - component: {fileID: 1629977447}
   - component: {fileID: 1629977446}
+  - component: {fileID: 1629977449}
   m_Layer: 5
   m_Name: Notee1 (27)
   m_TagString: Untagged
@@ -9095,6 +9708,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1629977444}
   m_CullTransparentMesh: 1
+--- !u!114 &1629977449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1629977444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1652680953
 GameObject:
   m_ObjectHideFlags: 0
@@ -9107,6 +9735,7 @@ GameObject:
   - component: {fileID: 1652680957}
   - component: {fileID: 1652680956}
   - component: {fileID: 1652680955}
+  - component: {fileID: 1652680958}
   m_Layer: 5
   m_Name: Notee1 (13)
   m_TagString: Untagged
@@ -9227,6 +9856,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652680953}
   m_CullTransparentMesh: 1
+--- !u!114 &1652680958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652680953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: B
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1672116104
 GameObject:
   m_ObjectHideFlags: 0
@@ -9371,6 +10015,7 @@ GameObject:
   - component: {fileID: 1679460855}
   - component: {fileID: 1679460854}
   - component: {fileID: 1679460853}
+  - component: {fileID: 1679460856}
   m_Layer: 5
   m_Name: Notee1 (9)
   m_TagString: Untagged
@@ -9491,6 +10136,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679460851}
   m_CullTransparentMesh: 1
+--- !u!114 &1679460856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679460851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1690250375
 GameObject:
   m_ObjectHideFlags: 0
@@ -9503,6 +10163,7 @@ GameObject:
   - component: {fileID: 1690250379}
   - component: {fileID: 1690250378}
   - component: {fileID: 1690250377}
+  - component: {fileID: 1690250380}
   m_Layer: 5
   m_Name: Notee (20)
   m_TagString: Untagged
@@ -9635,6 +10296,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690250375}
   m_CullTransparentMesh: 1
+--- !u!114 &1690250380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690250375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1715068770
 GameObject:
   m_ObjectHideFlags: 0
@@ -9854,6 +10530,7 @@ GameObject:
   - component: {fileID: 1769046771}
   - component: {fileID: 1769046770}
   - component: {fileID: 1769046769}
+  - component: {fileID: 1769046772}
   m_Layer: 5
   m_Name: Notee1 (3)
   m_TagString: Untagged
@@ -9974,6 +10651,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769046767}
   m_CullTransparentMesh: 1
+--- !u!114 &1769046772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769046767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: B
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1779507467
 GameObject:
   m_ObjectHideFlags: 0
@@ -10118,6 +10810,7 @@ GameObject:
   - component: {fileID: 1797107458}
   - component: {fileID: 1797107457}
   - component: {fileID: 1797107456}
+  - component: {fileID: 1797107459}
   m_Layer: 5
   m_Name: Notee (11)
   m_TagString: Untagged
@@ -10238,6 +10931,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1797107454}
   m_CullTransparentMesh: 1
+--- !u!114 &1797107459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797107454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1809617397
 GameObject:
   m_ObjectHideFlags: 0
@@ -10286,6 +10994,7 @@ GameObject:
   - component: {fileID: 1810293044}
   - component: {fileID: 1810293043}
   - component: {fileID: 1810293042}
+  - component: {fileID: 1810293045}
   m_Layer: 5
   m_Name: Notee1 (5)
   m_TagString: Untagged
@@ -10406,6 +11115,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810293040}
   m_CullTransparentMesh: 1
+--- !u!114 &1810293045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810293040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1812735720
 GameObject:
   m_ObjectHideFlags: 0
@@ -10418,6 +11142,7 @@ GameObject:
   - component: {fileID: 1812735724}
   - component: {fileID: 1812735723}
   - component: {fileID: 1812735722}
+  - component: {fileID: 1812735725}
   m_Layer: 5
   m_Name: Notee1 (26)
   m_TagString: Untagged
@@ -10550,6 +11275,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812735720}
   m_CullTransparentMesh: 1
+--- !u!114 &1812735725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812735720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1812929449
 GameObject:
   m_ObjectHideFlags: 0
@@ -10666,6 +11406,7 @@ GameObject:
   - component: {fileID: 1837788626}
   - component: {fileID: 1837788625}
   - component: {fileID: 1837788624}
+  - component: {fileID: 1837788627}
   m_Layer: 5
   m_Name: Notee (17)
   m_TagString: Untagged
@@ -10786,6 +11527,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837788622}
   m_CullTransparentMesh: 1
+--- !u!114 &1837788627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837788622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1843138399
 GameObject:
   m_ObjectHideFlags: 0
@@ -10798,6 +11554,7 @@ GameObject:
   - component: {fileID: 1843138403}
   - component: {fileID: 1843138402}
   - component: {fileID: 1843138401}
+  - component: {fileID: 1843138404}
   m_Layer: 5
   m_Name: Notee1 (30)
   m_TagString: Untagged
@@ -10918,6 +11675,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1843138399}
   m_CullTransparentMesh: 1
+--- !u!114 &1843138404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843138399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: B
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1850475678
 GameObject:
   m_ObjectHideFlags: 0
@@ -11062,6 +11834,7 @@ GameObject:
   - component: {fileID: 1852510880}
   - component: {fileID: 1852510879}
   - component: {fileID: 1852510878}
+  - component: {fileID: 1852510881}
   m_Layer: 5
   m_Name: Notee1 (1)
   m_TagString: Untagged
@@ -11182,6 +11955,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852510876}
   m_CullTransparentMesh: 1
+--- !u!114 &1852510881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852510876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1866133231
 GameObject:
   m_ObjectHideFlags: 0
@@ -11326,6 +12114,7 @@ GameObject:
   - component: {fileID: 1875557701}
   - component: {fileID: 1875557700}
   - component: {fileID: 1875557699}
+  - component: {fileID: 1875557702}
   m_Layer: 5
   m_Name: Notee1 (15)
   m_TagString: Untagged
@@ -11446,6 +12235,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875557697}
   m_CullTransparentMesh: 1
+--- !u!114 &1875557702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875557697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1880804727
 GameObject:
   m_ObjectHideFlags: 0
@@ -11458,6 +12262,7 @@ GameObject:
   - component: {fileID: 1880804731}
   - component: {fileID: 1880804730}
   - component: {fileID: 1880804729}
+  - component: {fileID: 1880804732}
   m_Layer: 5
   m_Name: Notee1 (29)
   m_TagString: Untagged
@@ -11590,6 +12395,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880804727}
   m_CullTransparentMesh: 1
+--- !u!114 &1880804732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880804727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: A
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1887968532
 GameObject:
   m_ObjectHideFlags: 0
@@ -11602,6 +12422,7 @@ GameObject:
   - component: {fileID: 1887968536}
   - component: {fileID: 1887968535}
   - component: {fileID: 1887968534}
+  - component: {fileID: 1887968537}
   m_Layer: 5
   m_Name: Notee (7)
   m_TagString: Untagged
@@ -11722,6 +12543,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887968532}
   m_CullTransparentMesh: 1
+--- !u!114 &1887968537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887968532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: D#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1893993999
 GameObject:
   m_ObjectHideFlags: 0
@@ -12370,6 +13206,7 @@ GameObject:
   - component: {fileID: 1972046619}
   - component: {fileID: 1972046618}
   - component: {fileID: 1972046617}
+  - component: {fileID: 1972046620}
   m_Layer: 5
   m_Name: Notee (3)
   m_TagString: Untagged
@@ -12490,6 +13327,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972046615}
   m_CullTransparentMesh: 1
+--- !u!114 &1972046620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972046615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1973370266
 GameObject:
   m_ObjectHideFlags: 0
@@ -13068,6 +13920,7 @@ GameObject:
   - component: {fileID: 2074465872}
   - component: {fileID: 2074465871}
   - component: {fileID: 2074465870}
+  - component: {fileID: 2074465873}
   m_Layer: 5
   m_Name: Notee (10)
   m_TagString: Untagged
@@ -13188,6 +14041,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074465868}
   m_CullTransparentMesh: 1
+--- !u!114 &2074465873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074465868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: C#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &2078561432
 GameObject:
   m_ObjectHideFlags: 0
@@ -13332,6 +14200,7 @@ GameObject:
   - component: {fileID: 2101585337}
   - component: {fileID: 2101585336}
   - component: {fileID: 2101585335}
+  - component: {fileID: 2101585338}
   m_Layer: 5
   m_Name: Notee
   m_TagString: Untagged
@@ -13452,6 +14321,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101585333}
   m_CullTransparentMesh: 1
+--- !u!114 &2101585338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101585333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: F#
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &2125770510
 GameObject:
   m_ObjectHideFlags: 0
@@ -13464,6 +14348,7 @@ GameObject:
   - component: {fileID: 2125770514}
   - component: {fileID: 2125770513}
   - component: {fileID: 2125770512}
+  - component: {fileID: 2125770515}
   m_Layer: 5
   m_Name: Notee1 (28)
   m_TagString: Untagged
@@ -13596,6 +14481,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125770510}
   m_CullTransparentMesh: 1
+--- !u!114 &2125770515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125770510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ef90e279211dcc4693a36c7cbe3e004, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notaMusical: G
+  manager: {fileID: 1111995512}
+  corPress: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -13606,5 +14506,4 @@ SceneRoots:
   - {fileID: 1108618339}
   - {fileID: 1111995511}
   - {fileID: 1467193167}
-  - {fileID: 348341410}
   - {fileID: 2012072079}
