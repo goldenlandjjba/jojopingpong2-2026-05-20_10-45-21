@@ -4,8 +4,11 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
 
+    integrations:
+      app_store_connect: "chave da apple" # <-- Substitua pelo nome EXATO da chave que está no painel do Codemagic
+
     environment:
-      unity: "2023.1.10f1"
+      unity: "6000.4.4f1"
       groups:
         - unity_credentials
         - app_store_credentials # IMPORTANTE: Crie esse grupo no Codemagic com as chaves da Apple
