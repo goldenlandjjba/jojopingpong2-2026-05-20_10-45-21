@@ -8,7 +8,7 @@ workflows:
       app_store_connect: "chave da apple" # <-- Substitua pelo nome EXATO da chave que está no painel do Codemagic
 
     environment:
-      unity: "6000.4.4f1"
+      unity: "6000.3.16f1"
       groups:
         - unity_credentials
         - app_store_credentials # IMPORTANTE: Crie esse grupo no Codemagic com as chaves da Apple
