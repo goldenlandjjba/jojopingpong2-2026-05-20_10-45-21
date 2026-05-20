@@ -33,8 +33,18 @@ workflows:
         script: |
           echo "⚙️ Exportando projeto Xcode através do Unity 6..."
           
-          # Comando unificado em linha única para evitar o erro de 'command not found' (127)
-          $UNITY_EXECUTABLE -batchmode -quit -projectPath "${PROJECT_PATH}" -executeMethod "${BUILD_METHOD}" -logFile unity_build_log.txt
+          # Definição manual e segura do caminho do Unity 6 no Mac do Codemagic
+          UNITY_PATH="/Applications/Unity/Hub/Editor/6000.3.16f1/Unity.app/Contents/MacOS/Unity"
+          
+          # Se o caminho acima não existir, tenta o caminho alternativo padrão
+          if [ ! -f "$UNITY_PATH" ]; then
+            UNITY_PATH="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
+          fi
+          
+          echo "🚀 Executando Unity a partir de: $UNITY_PATH"
+          
+          # Execução usando o caminho direto resolvido
+          "$UNITY_PATH" -batchmode -quit -projectPath "${PROJECT_PATH}" -executeMethod "${BUILD_METHOD}" -logFile unity_build_log.txt
           
           UNITY_EXIT_CODE=$?
           
