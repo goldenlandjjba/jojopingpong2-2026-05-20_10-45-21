@@ -5,32 +5,32 @@ workflows:
     instance_type: mac_mini_m1
 
     integrations:
-      app_store_connect: "chave da apple" # <-- Substitua pelo nome EXATO da chave que está no painel do Codemagic
+      app_store_connect: "chave da apple" # <-- Certifique-se de usar o nome exato do painel do Codemagic
 
     environment:
       unity: "6000.3.16f1"
       groups:
         - unity_credentials
-        - app_store_credentials # IMPORTANTE: Crie esse grupo no Codemagic com as chaves da Apple
+        - app_store_credentials
       vars:
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
         UNITY_IOS_DIR: "build/ios"
         XCODE_PROJECT: "Unity-iPhone.xcodeproj"
         XCODE_SCHEME: "Unity-iPhone"
-        BUNDLE_ID: "com.RafaelOlv.SustainedPong" # <-- Troque pelo seu Bundle ID real
+        BUNDLE_ID: "com.RafaelOlv.SustainedPong"
 
-      # Configuração automática de assinatura para App Store
+      # Configuração automática de assinatura para App Store (Alinhado corretamente)
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: $BUNDLE_ID
+        bundle_identifier: "com.RafaelOlv.SustainedPong"
 
     scripts:
       - name: Activate Unity License
         script: |
           # ... (Seu script de licença como antes)
 
-     - name: Build iOS Project (Exportando do Unity)
+      - name: Build iOS Project (Exportando do Unity)
         script: |
           echo "⚙️ Exportando projeto Xcode através do Unity 6..."
           
@@ -69,17 +69,15 @@ workflows:
       - name: Build IPA (Assinado)
         script: |
           echo "🏗️ Construindo e assinando o IPA..."
-          # Aqui removemos o --no-codesign. O Codemagic usará os perfis do ios_signing.
           xcode-project build-ipa \
             --project "${UNITY_IOS_DIR}/${XCODE_PROJECT}" \
             --scheme "${XCODE_SCHEME}"
 
     artifacts:
-      - build/ios/build/ipa/*.ipa # O caminho padrão onde o xcode-project salva o IPA
-      - unity_build_log.txt       # Salva o log do Unity para você inspecionar depois
+      - build/ios/build/ipa/*.ipa
+      - unity_build_log.txt
 
     publishing:
       app_store_connect:
-        # Requer que você conecte sua conta Apple no Codemagic (Teams > Integrations)
         auth: integration 
-        submit_to_testflight: true # Mude para false se quiser apenas subir, sem mandar pro TestFlight
+        submit_to_testflight: true
