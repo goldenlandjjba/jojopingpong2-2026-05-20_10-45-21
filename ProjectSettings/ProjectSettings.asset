@@ -147,7 +147,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0.7
+  bundleVersion: 1.0.9
   preloadedAssets:
   - {fileID: -944628639613478452, guid: 0eef4da6304b7944aad4459e044e0811, type: 3}
   metroInputSource: 0
@@ -175,7 +175,7 @@ PlayerSettings:
   buildNumber:
     Standalone: 0
     VisionOS: 0
-    iPhone: 1
+    iPhone: 3
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 11
@@ -937,11 +937,11 @@ PlayerSettings:
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
   enableDirectStorage: 0
-  cloudProjectId: 7776f52b-b058-4681-9258-776f79b6d2d5
+  cloudProjectId: e6e9f40a-d860-4548-b051-c3cfd9cb7615
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: jojopingpong 2026-05-12_18-00-33
-  organizationId: rafaoliveirasales2024
+  projectName: Default iOS
+  organizationId: rafaeloliveiramobile
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

@@ -1,43 +1,69 @@
 workflows:
-  unity_ios_build:
-    name: Unity iOS Build (Unsigned)
+  unity_ios_build_signed:
+    name: Unity iOS Build (Signed & App Store Connect)
     max_build_duration: 120
     instance_type: mac_mini_m1
 
     environment:
-      unity: "2023.1.10f1"  # Ou use o script de install se precisar
+      unity: "2023.1.10f1"
       groups:
         - unity_credentials
+        - app_store_credentials # IMPORTANTE: Crie esse grupo no Codemagic com as chaves da Apple
       vars:
         PROJECT_PATH: "."
         BUILD_METHOD: "BuildScript.BuildiOS"
         UNITY_IOS_DIR: "build/ios"
         XCODE_PROJECT: "Unity-iPhone.xcodeproj"
         XCODE_SCHEME: "Unity-iPhone"
+        BUNDLE_ID: "com.suaempresa.seuapp" # <-- Troque pelo seu Bundle ID real
+
+      # Configuração automática de assinatura para App Store
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: $BUNDLE_ID
 
     scripts:
-      # Seus scripts de licença e install Unity (mantenha se usando custom version)
       - name: Activate Unity License
         script: |
-          # ... (como antes)
+          # ... (Seu script de licença como antes)
 
-      - name: Build iOS Project
+      - name: Build iOS Project (Exportando do Unity)
         script: |
-          # ... (como antes)
+          echo "⚙️ Exportando projeto Xcode através do Unity..."
+          # Exemplo padrão de exportação. Ajuste o caminho do executável do Unity se necessário.
+          /Applications/Unity/Hub/Editor/2023.1.10f1/Unity.app/Contents/MacOS/Unity \
+            -batchmode \
+            -quit \
+            -projectPath "${PROJECT_PATH}" \
+            -executeMethod "${BUILD_METHOD}" \
+            -logFile unity_build_log.txt || (cat unity_build_log.txt && exit 1)
+          
+          # Essa última linha "|| (cat ...)" é o pulo do gato: se o Unity falhar, 
+          # ele imprime o log na tela do Codemagic em vez de falhar silenciosamente!
 
-      - name: Build IPA Unsigned
+      - name: Verificar se a pasta do Xcode foi criada
         script: |
-          echo "🏗️ Construindo IPA sem assinatura..."
+          if [ ! -d "${UNITY_IOS_DIR}/${XCODE_PROJECT}" ]; then
+            echo "❌ ERRO: O projeto Xcode não foi encontrado em ${UNITY_IOS_DIR}/${XCODE_PROJECT}."
+            echo "Isso significa que o script BuildScript.BuildiOS falhou ou salvou na pasta errada."
+            exit 1
+          fi
+          echo "✅ Projeto Xcode encontrado com sucesso!"
+
+      - name: Build IPA (Assinado)
+        script: |
+          echo "🏗️ Construindo e assinando o IPA..."
+          # Aqui removemos o --no-codesign. O Codemagic usará os perfis do ios_signing.
           xcode-project build-ipa \
             --project "${UNITY_IOS_DIR}/${XCODE_PROJECT}" \
-            --scheme "${XCODE_SCHEME}" \
-            --no-codesign  # <-- Isso pula o signing!
-
-      - name: Verificar resultado
-        script: |
-          # ... (como antes, mas sem checar signing)
+            --scheme "${XCODE_SCHEME}"
 
     artifacts:
-      - build/ios/*.ipa  # O IPA unsigned sai aqui
+      - build/ios/build/ipa/*.ipa # O caminho padrão onde o xcode-project salva o IPA
+      - unity_build_log.txt       # Salva o log do Unity para você inspecionar depois
 
-    # Sem publishing ou ios_signing!
+    publishing:
+      app_store_connect:
+        # Requer que você conecte sua conta Apple no Codemagic (Teams > Integrations)
+        auth: integration 
+        submit_to_testflight: true # Mude para false se quiser apenas subir, sem mandar pro TestFlight

@@ -8,20 +8,19 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems; 
 using UnityEngine.Networking;
 using System.IO;
+using TMPro; 
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
 using SimpleFileBrowser; 
-using UnityEngine.InputSystem; // OBRIGATÓRIO PARA O MINIS
-using Minis; // NOVO REI DO MIDI: MINIS
-// using GooglePlayGames;
-// using GooglePlayGames.BasicApi;
+using UnityEngine.InputSystem; 
+using Minis; 
 
 public class PingPongVideoManual : MonoBehaviour 
 {
     public enum Language { Portugues, English, Espanol, Italiano }
     public enum EstadoJogo { AguardandoPedido, LendoInfo, TurnoJogador1, TurnoJogador2, ReproduzindoVideo, PausaEntreRounds, FimDeJogo, EventoCinematico, ConfrontoDireto }
     
-    public enum TipoCenario { SalaEscolar, NapolesPublico, CelaIsolamento }
+    public enum TipoCenario { SalaEscolar, NapolesMafia } // Cela removida, foco na Lore da Máfia
     public enum EmocaoMusical { Neutra, VitoriaMaior, TensaoMenor, PerigoDiminuto, MagiaAumentada }
 
     [SerializeField] private EstadoJogo estadoAtual = EstadoJogo.AguardandoPedido;
@@ -33,9 +32,9 @@ public class PingPongVideoManual : MonoBehaviour
     public float tecnicaEspectral = 1.0f; 
     public float focoEscolar = 1.0f;
 
-    [Header("Mecânicas da Temporada 2")]
-    public bool isSeason2 = false; 
-    public int vidasLorna = 3; 
+    [Header("Mecânica da Lore: Aposta da Máfia")]
+    public bool modoApostaAtivo = false; 
+    public int registrosMusicaisRestantes = 3; 
 
     [Header("Sistema de Combate e Combos")]
     public int comboAtual = 0;
@@ -51,8 +50,8 @@ public class PingPongVideoManual : MonoBehaviour
 
     [Header("Dificuldade")]
     public AnimationCurve curvaMultiplicadorAdrenalina = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1)); 
-    [Range(0f, 1f)] public float erroMaximoIA = 0.30f; 
-    [Range(0f, 1f)] public float erroMinimoIA = 0.01f;
+    [Range(0f, 1f)] public float erroMaximoIA = 0.15f; 
+    [Range(0f, 1f)] public float erroMinimoIA = 0.005f; 
     private float janelaPerfeitaAtual; 
     private bool botaoMovelAtivo = false;
     private Coroutine rotinaMoverBotao;
@@ -71,15 +70,18 @@ public class PingPongVideoManual : MonoBehaviour
     [Header("Seleção de Cenários")]
     public TipoCenario cenarioAtual = TipoCenario.SalaEscolar;
     public GameObject painelSelecaoCenario; 
-    public Button btnCenarioEscola, btnCenarioNapoles, btnCenarioCela; 
-    public GameObject ambienteEscola, ambienteNapoles, ambienteCela; 
+    public Button btnCenarioEscola, btnCenarioNapoles; 
+    public GameObject ambienteEscola, ambienteNapoles; 
     public Text textoTituloCenario; 
 
     [Header("UI & Canvas Principal")]
     public GameObject painelPedido, containerInterfaceJogo; 
     public RectTransform painelPlacar; 
     public Button botaoAceitar, botaoJogador1, botaoTutorialMidi, botaoImportarMidi, botaoLeaderboard;  
-    public Text textoPontuacao, textoLabelEnergia, textoFeedback, textoNotificacaoDesafio;
+    
+    public TextMeshProUGUI textoPontuacao; 
+    
+    public Text textoLabelEnergia, textoFeedback, textoNotificacaoDesafio;
     public Text textoNewsPerfil, textoNewsLegenda, textoBotaoAceitar, textoBotaoRecusar, textoAvisoFight; 
     public Image barraDeTempoVisual, barraEnergiaUI; 
     public CanvasGroup flashGiovanna;
@@ -168,13 +170,6 @@ public class PingPongVideoManual : MonoBehaviour
     public VideoClip jogador1PerdeuNapoles, jogador2PerdeuNapoles, goldenChordVideoNapoles, videoEventoHeadshotNapoles; 
     public VideoClip[] jogador1ClipesClimaxNapoles, jogador1ClipesTristesNapoles;
 
-    [Header("Clipes de Vídeo (Temporada 2 - Cela)")]
-    public VideoClip inicioPartidaCela; 
-    public VideoClip[] jogador1ClipesCela, jogador2ClipesCela;
-    public VideoClip jogador1PerdeuCela, jogador2PerdeuCela, goldenChordVideoCela, videoEventoHeadshotCela; 
-    public VideoClip[] jogador1ClipesClimaxCela, jogador1ClipesTristesCela;
-    public VideoClip lornaDesintegrandoVideo, bossDesintegrandoVideo;
-
     private VideoClip inicioPartida, jogador1Perdeu, jogador2Perdeu, goldenChordVideo, videoEventoHeadshot;
     private VideoClip[] jogador1Clipes, jogador2Clipes, jogador1ClipesClimax, jogador1ClipesTristes;
 
@@ -200,7 +195,7 @@ public class PingPongVideoManual : MonoBehaviour
     [Header("Sincronia & Combate")]
     public float tempoDoSoloPiano = 53.0f, margemPerfeito = 0.25f; 
     public Vector2 limiteAleatorioX = new Vector2(-400, 400), limiteAleatorioY = new Vector2(-300, 100); 
-    public int pontosObjetivoFinal = 100;
+    public float pontosObjetivoFinal = 100f; 
     public float tempoReacaoBase = 1.8f; 
     [Range(0f, 1f)] public float chanceErroIA = 0.15f; 
     public RectTransform[] publicoFase;
@@ -216,13 +211,14 @@ public class PingPongVideoManual : MonoBehaviour
     private bool fazendoCrossfade = false;
 
     [Header("Debug & Testes")]
-    public int pontosJogador1 = 0;
-    private int pontosJogador2, proximoAlvoFase = 15;
+    public float pontosJogador1 = 0f; 
+    private float pontosJogador2 = 0f;
+    private float proximoAlvoFase = 15f; 
     
     private float tempoDificuldadeAtual, tempoLimiteAbsoluto, energiaAtual, multiplicadorAdrenalina = 1f;
     private bool estouAguardandoSaque = true, processandoVideo = false, musicaEpicaAtiva = false, energiaSomTocado = false;
     private string forcaDoUltimoGolpe = "NORMAL", statusRealtime = "";
-    private int tamanhoFonteOriginal;
+    private float tamanhoFonteOriginal;
     private Coroutine timerTurnoCoroutine, animacaoPlacarCoroutine, feedbackCoroutine;
 
     private int poolSize = 64; 
@@ -261,7 +257,7 @@ public class PingPongVideoManual : MonoBehaviour
         Text txt = objTxt.AddComponent<Text>();
         txt.raycastTarget = false; 
         txt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-        txt.text = mensagem; txt.color = cor; txt.fontSize = isSeason2 ? 45 : 35;
+        txt.text = mensagem; txt.color = cor; txt.fontSize = modoApostaAtivo ? 45 : 35;
         txt.fontStyle = FontStyle.BoldAndItalic; txt.alignment = TextAnchor.MiddleCenter;
         
         Outline contorno = objTxt.AddComponent<Outline>();
@@ -296,7 +292,7 @@ public class PingPongVideoManual : MonoBehaviour
         Image imgBotao = botaoJogador1.GetComponent<Image>();
         if (imgBotao != null) { imgRastro.sprite = imgBotao.sprite; imgRastro.type = imgBotao.type; }
         
-        Color corFantasma = isSeason2 ? Color.cyan : new Color(1f, 0.5f, 0f); corFantasma.a = 0.5f; imgRastro.color = corFantasma;
+        Color corFantasma = modoApostaAtivo ? Color.cyan : new Color(1f, 0.5f, 0f); corFantasma.a = 0.5f; imgRastro.color = corFantasma;
         
         RectTransform rtRastro = rastro.GetComponent<RectTransform>(); RectTransform rtBotao = botaoJogador1.GetComponent<RectTransform>();
         rtRastro.anchoredPosition = rtBotao.anchoredPosition; rtRastro.sizeDelta = rtBotao.sizeDelta; rtRastro.localScale = rtBotao.localScale; rtRastro.localRotation = rtBotao.localRotation;
@@ -429,7 +425,6 @@ public class PingPongVideoManual : MonoBehaviour
     void OnEnable() {
         try {
             InputSystem.onDeviceChange += OnDeviceChange;
-            // Registra dispositivos que já estão conectados ao iniciar
             foreach (var device in InputSystem.devices) {
                 if (device is MidiDevice midiDevice) RegisterDevice(midiDevice);
             }
@@ -504,14 +499,14 @@ public class PingPongVideoManual : MonoBehaviour
             if (painelTecladoVisual88) painelTecladoVisual88.SetActive(true);
             if (botaoJogador1) botaoJogador1.gameObject.SetActive(false);
             progressoMusicaObrigatoria = 0; 
-            if (estadoAtual != EstadoJogo.AguardandoPedido && !reproduzindoMidiArquivo) ShowFeedback("RECONSTRUA A MELODIA", Color.cyan);
+            if (estadoAtual != EstadoJogo.AguardandoPedido && !reproduzindoMidiArquivo) ShowFeedback(GetTexto("ReconstruaMelodia"), Color.cyan);
         } else {
             if (telaUnica) telaUnica.gameObject.SetActive(!isPortrait);
             if (fundoEstaticoImagem) fundoEstaticoImagem.gameObject.SetActive(false);
             if (painelTecladoVisual88) painelTecladoVisual88.SetActive(false);
             
             if (estadoAtual != EstadoJogo.AguardandoPedido) {
-                ShowFeedback(isSeason2 ? "SURVIVE!" : "FIGHT!", Color.red);
+                ShowFeedback(GetTexto("SurviveOrFight"), Color.red);
                 ProximoRound(true);
             }
             
@@ -548,25 +543,44 @@ public class PingPongVideoManual : MonoBehaviour
             foreach (Transform child in containerPostsUI) { Destroy(child.gameObject); }
         }
 
-        if (!easterEggApagaoAtivo) ShowFeedback("CONECTANDO...", Color.yellow);
-        yield return new WaitForSeconds(1.5f);
+        if (!easterEggApagaoAtivo) ShowFeedback(GetTexto("Conectando"), Color.yellow);
+        
+        string urlSemCache = urlJsonFeed + "?t=" + System.DateTime.Now.Ticks;
 
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(urlJsonFeed)) {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(urlSemCache)) {
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError) {
-                if (!easterEggApagaoAtivo) ShowFeedback("MUNDO OFFLINE", Color.red);
+                if (!easterEggApagaoAtivo) ShowFeedback(GetTexto("MundoOffline"), Color.red);
             } else {
-                if (prefabPostItem != null && containerPostsUI != null) {
-                    GameObject novoPost1 = Instantiate(prefabPostItem, containerPostsUI);
-                    Text[] textos1 = novoPost1.GetComponentsInChildren<Text>();
-                    if (textos1.Length >= 2) { textos1[0].text = "Anônimo01"; textos1[1].text = "Dica: No Easter Egg de invocação, bata os acordes secos, ignore a mão esquerda arpejada, ou o sensor não pega!"; }
+                try {
+                    string jsonResult = webRequest.downloadHandler.text;
+                    FeedData dadosFeed = JsonUtility.FromJson<FeedData>(jsonResult);
 
-                    GameObject novoPost2 = Instantiate(prefabPostItem, containerPostsUI);
-                    Text[] textos2 = novoPost2.GetComponentsInChildren<Text>();
-                    if (textos2.Length >= 2) { textos2[0].text = "Anônimo02"; textos2[1].text = "Review: A Season 2 na Cela tá insana! O tempo de reação caiu muito."; }
+                    if (dadosFeed != null && dadosFeed.posts != null) {
+                        foreach (PostSocial post in dadosFeed.posts) {
+                            if (prefabPostItem != null && containerPostsUI != null) {
+                                GameObject novoPost = Instantiate(prefabPostItem, containerPostsUI);
+                                Text[] textos = novoPost.GetComponentsInChildren<Text>();
+                                
+                                if (textos.Length >= 2) { 
+                                    textos[0].text = post.autor; 
+                                    textos[1].text = post.mensagem; 
+
+                                    if (post.tipo == "OFICIAL") {
+                                        textos[0].color = Color.cyan; 
+                                    } else {
+                                        textos[0].color = Color.white;
+                                    }
+                                }
+                            }
+                        }
+                        if (!easterEggApagaoAtivo) ShowFeedback(GetTexto("FeedAtualizado"), Color.cyan);
+                    }
+                } catch (System.Exception e) {
+                    Debug.LogError("Erro ao ler JSON: " + e.Message);
+                    if (!easterEggApagaoAtivo) ShowFeedback("ERRO DE DADOS", Color.red);
                 }
-                if (!easterEggApagaoAtivo) ShowFeedback("FEED ATUALIZADO", Color.cyan);
             }
         }
     }
@@ -575,9 +589,6 @@ public class PingPongVideoManual : MonoBehaviour
         if (!ativarPlayGames) return; 
         
         try {
-            // PlayGamesPlatform.DebugLogEnabled = true;
-            // PlayGamesPlatform.Activate();
-
             Social.localUser.Authenticate((bool success) => {
                 if(success) {
                     Debug.Log("Google Play Games: Autenticado com sucesso!");
@@ -586,18 +597,18 @@ public class PingPongVideoManual : MonoBehaviour
                 }
             });
         } catch (System.Exception e) {
-            Debug.LogWarning("Erro fatal ao iniciar GPG (O jogo não vai quebrar por causa disso): " + e.Message);
+            Debug.LogWarning("Erro fatal ao iniciar GPG: " + e.Message);
         }
     }
     
-    public void ReportarPontuacaoGooglePlay(int score) { 
+    public void ReportarPontuacaoGooglePlay(float score) { 
         if (!ativarPlayGames || !Social.localUser.authenticated) return; 
 
-        Social.ReportScore(score, idLeaderboardPontuacao, (bool success) => {
+        Social.ReportScore((long)score, idLeaderboardPontuacao, (bool success) => {
             if (success) Debug.Log("Pontuação salva na nuvem!");
         });
         
-        AvaliarConquistas(score);
+        AvaliarConquistas((int)score);
     }
     
     public void MostrarLeaderboard() { 
@@ -608,7 +619,7 @@ public class PingPongVideoManual : MonoBehaviour
         } else {
             Social.localUser.Authenticate((bool success) => {
                 if (success) Social.ShowLeaderboardUI();
-                else ShowFeedback("FALHA AO CONECTAR GPG", Color.red);
+                else ShowFeedback(GetTexto("FalhaGPG"), Color.red);
             });
         }
     }
@@ -633,19 +644,19 @@ public class PingPongVideoManual : MonoBehaviour
         FileBrowser.ShowLoadDialog((paths) => {
             if (paths != null && paths.Length > 0) CarregarETocarArquivoMidiParaEstudo(paths[0]); 
         }, 
-        () => { ShowFeedback("IMPORTAÇÃO CANCELADA", Color.red); }, 
-        FileBrowser.PickMode.Files, false, null, null, "Selecione a Música MIDI", "Importar");
+        () => { ShowFeedback(GetTexto("ImportacaoCancelada"), Color.red); }, 
+        FileBrowser.PickMode.Files, false, null, null, GetTexto("SelecioneMidi"), GetTexto("ImportarBotao"));
     }
 
     public void CarregarETocarArquivoMidiParaEstudo(string caminhoAbsoluto = "") {
         string caminhoDoArquivo = string.IsNullOrEmpty(caminhoAbsoluto) ? Path.Combine(Application.streamingAssetsPath, nomeArquivoMidiEnsino) : caminhoAbsoluto;
-        if (!File.Exists(caminhoDoArquivo)) { ShowFeedback("ARQUIVO .MID NÃO ENCONTRADO", Color.red); return; }
+        if (!File.Exists(caminhoDoArquivo)) { ShowFeedback(GetTexto("MidiNaoEncontrado"), Color.red); return; }
 
         if (rotinaReproducaoMidi != null) StopCoroutine(rotinaReproducaoMidi);
         
         PararTodasAsMusicas(); 
         AlternarModoPianoSolo(true); 
-        ShowFeedback(string.IsNullOrEmpty(caminhoAbsoluto) ? "LENDO PARTITURA..." : "IMPORTANDO MÚSICA...", Color.yellow);
+        ShowFeedback(string.IsNullOrEmpty(caminhoAbsoluto) ? GetTexto("LendoPartitura") : GetTexto("ImportandoMusica"), Color.yellow);
         
         rotinaReproducaoMidi = StartCoroutine(ProcessarEReproduzirMidi(caminhoDoArquivo));
         StartCoroutine(GerenciarVideosDoTutorial());
@@ -688,7 +699,7 @@ public class PingPongVideoManual : MonoBehaviour
         }
         catch (System.Exception) { yield break; }
 
-        if (!easterEggApagaoAtivo) ShowFeedback("TUTORIAL INICIADO!", Color.cyan);
+        if (!easterEggApagaoAtivo) ShowFeedback(GetTexto("TutorialIniciado"), Color.cyan);
         
         float tempoPreAviso = 1.5f; 
         float tempoInicioTutorial = Time.time + tempoPreAviso;
@@ -721,7 +732,7 @@ public class PingPongVideoManual : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(2.5f); 
-        if (!easterEggApagaoAtivo) ShowFeedback("TUTORIAL CONCLUÍDO", Color.green);
+        if (!easterEggApagaoAtivo) ShowFeedback(GetTexto("TutorialConcluido"), Color.green);
         reproduzindoMidiArquivo = false; AlternarModoPianoSolo(false); 
     }
 
@@ -864,7 +875,7 @@ public class PingPongVideoManual : MonoBehaviour
 
         if (cordasVibrando.Count < 2) { 
             MudarEmocao(EmocaoMusical.Neutra); 
-            if (!easterEggApagaoAtivo) ultimoAcordeDetectado = "Aguardando Acorde..."; 
+            if (!easterEggApagaoAtivo) ultimoAcordeDetectado = GetTexto("AguardandoAcorde"); 
             return; 
         }
 
@@ -880,10 +891,10 @@ public class PingPongVideoManual : MonoBehaviour
         }
 
         EmocaoMusical novaEmocao = EmocaoMusical.Neutra;
-        if (tem3 && tem6) { novaEmocao = EmocaoMusical.PerigoDiminuto; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = "Acorde Diminuto"; }
-        else if (tem4 && tem8) { novaEmocao = EmocaoMusical.MagiaAumentada; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = "Acorde Aumentado"; midiDisparouGolden = true; }
-        else if (tem3) { novaEmocao = EmocaoMusical.TensaoMenor; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = "Acorde Menor"; }
-        else if (tem4) { novaEmocao = EmocaoMusical.VitoriaMaior; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = "Acorde Maior"; midiDisparouGolden = true; }
+        if (tem3 && tem6) { novaEmocao = EmocaoMusical.PerigoDiminuto; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = GetTexto("AcordeDiminuto"); }
+        else if (tem4 && tem8) { novaEmocao = EmocaoMusical.MagiaAumentada; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = GetTexto("AcordeAumentado"); midiDisparouGolden = true; }
+        else if (tem3) { novaEmocao = EmocaoMusical.TensaoMenor; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = GetTexto("AcordeMenor"); }
+        else if (tem4) { novaEmocao = EmocaoMusical.VitoriaMaior; if (!easterEggApagaoAtivo) ultimoAcordeDetectado = GetTexto("AcordeMaior"); midiDisparouGolden = true; }
 
         if (novaEmocao != emocaoAtual && novaEmocao != EmocaoMusical.Neutra) MudarEmocao(novaEmocao);
         
@@ -973,7 +984,7 @@ public class PingPongVideoManual : MonoBehaviour
     void SpawnParticulaImpacto(Vector3 posicaoMundo, Color cor) {
         if (containerInterfaceJogo == null) return;
         for (int i = 0; i < 6; i++) { 
-            GameObject pObj = new GameObject(isSeason2 ? "SparkGhost" : "Spark");
+            GameObject pObj = new GameObject(modoApostaAtivo ? "SparkGhost" : "Spark");
             pObj.transform.SetParent(containerInterfaceJogo.transform, false);
             Image img = pObj.AddComponent<Image>(); 
             img.raycastTarget = false; 
@@ -1083,14 +1094,14 @@ public class PingPongVideoManual : MonoBehaviour
             img.raycastTarget = false; 
             img.color = GetCorPelaVibe();
             RectTransform rt = blocoObj.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(isSeason2 ? 35f : 25f, Random.Range(100f, 200f)); 
+            rt.sizeDelta = new Vector2(modoApostaAtivo ? 35f : 25f, Random.Range(100f, 200f)); 
             
             float limiteLargura = (painelNotasCaindo.rect.width / 2f) - 40f; 
             float posMapeadaX = Mathf.Lerp(-limiteLargura, limiteLargura, Mathf.Clamp01((notaMidi - 21f) / 87f));
             
             rt.anchoredPosition = new Vector2(posMapeadaX, 700f); 
             
-            if (isSeason2) {
+            if (modoApostaAtivo) {
                 GameObject textoObj = new GameObject("TextoNota");
                 textoObj.transform.SetParent(blocoObj.transform, false);
                 Text txt = textoObj.AddComponent<Text>();
@@ -1116,7 +1127,7 @@ public class PingPongVideoManual : MonoBehaviour
     }
 
     Color GetCorPelaVibe() {
-        if (isSeason2) {
+        if (modoApostaAtivo) {
             if (emocaoAtual == EmocaoMusical.VitoriaMaior) return new Color(1f, 0.9f, 0.1f, 0.8f);
             if (emocaoAtual == EmocaoMusical.TensaoMenor) return new Color(0.6f, 0f, 1f, 0.8f);
             if (emocaoAtual == EmocaoMusical.PerigoDiminuto) return new Color(1f, 0.1f, 0.1f, 0.8f);
@@ -1137,12 +1148,12 @@ public class PingPongVideoManual : MonoBehaviour
             progressoMusicaObrigatoria++;
             ShowFeedback("PERFECT NOTE!", Color.green);
             if (progressoMusicaObrigatoria >= musicaObrigatoriaMidi.Length) {
-                ShowFeedback(isSeason2 ? "MEMÓRIA RESTAURADA!" : "MELODIA COMPLETA!", Color.yellow);
+                ShowFeedback(GetTexto("MemoriaRestaurada"), Color.yellow);
                 AlternarModoPianoSolo(false); 
             }
         } else {
             progressoMusicaObrigatoria = 0; 
-            ShowFeedback("Errou! Recomece a Melodia.", Color.red);
+            ShowFeedback(GetTexto("ErroMelodia"), Color.red);
         }
     }
 
@@ -1221,7 +1232,7 @@ public class PingPongVideoManual : MonoBehaviour
         StopCoroutine("EfeitoTransicaoCor");
         Color corAlvo = new Color(0, 0, 0, 0);
 
-        if (isSeason2) {
+        if (modoApostaAtivo) {
             switch (emocaoAtual) {
                 case EmocaoMusical.TensaoMenor: corAlvo = new Color(0.4f, 0f, 0.4f, 0.6f); break;
                 case EmocaoMusical.PerigoDiminuto: corAlvo = new Color(0.8f, 0f, 0f, 0.7f); break;
@@ -1287,8 +1298,7 @@ public class PingPongVideoManual : MonoBehaviour
         });
 
         if (btnCenarioEscola) btnCenarioEscola.onClick.AddListener(() => EscolherCenario(TipoCenario.SalaEscolar));
-        if (btnCenarioNapoles) btnCenarioNapoles.onClick.AddListener(() => EscolherCenario(TipoCenario.NapolesPublico));
-        if (btnCenarioCela) btnCenarioCela.onClick.AddListener(() => EscolherCenario(TipoCenario.CelaIsolamento));
+        if (btnCenarioNapoles) btnCenarioNapoles.onClick.AddListener(() => EscolherCenario(TipoCenario.NapolesMafia));
         
         botaoJogador1.onClick.AddListener(() => RegistrarCliqueJogador(""));
         
@@ -1335,24 +1345,40 @@ public class PingPongVideoManual : MonoBehaviour
     }
 
     void ConfigurarTextosDaLuta() {
-        if (isSeason2) {
+        if (cenarioAtual == TipoCenario.NapolesMafia) {
+            modoApostaAtivo = true;
             switch (idiomaAtual) {
                 case Language.English:
-                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Inmate Mikalle. Report to the Arena.";
-                    if(textoBotaoAceitar) textoBotaoAceitar.text = "ENTER"; if(textoBotaoRecusar) textoBotaoRecusar.text = "STAY IN CELL";
-                    if(textoLabelEnergia) textoLabelEnergia.text = "SOUL GAUGE"; if(textoNewsPerfil) textoNewsPerfil.text = "Sustained Dream: Requiem";
-                    if(textoNewsLegenda) textoNewsLegenda.text = "Rumors of a phantom piano in cell block 4...";
-                    if(textoTituloCenario) textoTituloCenario.text = "CHOOSE BATTLEGROUND";
+                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Mafia Deal: Lose the match, and your musical records are ERASED.";
+                    if(textoBotaoAceitar) textoBotaoAceitar.text = "ACCEPT BET"; if(textoBotaoRecusar) textoBotaoRecusar.text = "PROTECT RECORDS";
+                    if(textoLabelEnergia) textoLabelEnergia.text = "SUSTAINED DREAM"; if(textoNewsPerfil) textoNewsPerfil.text = "Lôrna & Giovanna";
+                    if(textoNewsLegenda) textoNewsLegenda.text = "The target is 100 points to break the Mafia's curse!";
+                    if(textoTituloCenario) textoTituloCenario.text = "MAFIA HIDEOUT";
+                    break;
+                case Language.Espanol:
+                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Acuerdo de la Mafia: Pierde y tus registros musicales serán BORRADOS.";
+                    if(textoBotaoAceitar) textoBotaoAceitar.text = "ACEPTAR APUESTA"; if(textoBotaoRecusar) textoBotaoRecusar.text = "PROTEGER DISCOS";
+                    if(textoLabelEnergia) textoLabelEnergia.text = "SUSTAINED DREAM"; if(textoNewsPerfil) textoNewsPerfil.text = "Lôrna & Giovanna";
+                    if(textoNewsLegenda) textoNewsLegenda.text = "¡El objetivo es 100 puntos para romper la maldición!";
+                    if(textoTituloCenario) textoTituloCenario.text = "ESCONDITE EN NÁPOLES";
+                    break;
+                case Language.Italiano:
+                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Accordo della Mafia: Perdi e i tuoi registri musicali verranno CANCELLATI.";
+                    if(textoBotaoAceitar) textoBotaoAceitar.text = "ACCETTARE SCOMMESSA"; if(textoBotaoRecusar) textoBotaoRecusar.text = "PROTEGGERE DISCHI";
+                    if(textoLabelEnergia) textoLabelEnergia.text = "SUSTAINED DREAM"; if(textoNewsPerfil) textoNewsPerfil.text = "Lôrna & Giovanna";
+                    if(textoNewsLegenda) textoNewsLegenda.text = "L'obiettivo è 100 punti per spezzare la maledizione della mafia!";
+                    if(textoTituloCenario) textoTituloCenario.text = "NASCONDIGLIO A NAPOLI";
                     break;
                 default:
-                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Detenta Mikalle. Compareça à Arena.";
-                    if(textoBotaoAceitar) textoBotaoAceitar.text = "ENTRAR"; if(textoBotaoRecusar) textoBotaoRecusar.text = "FICAR NA CELA";
-                    if(textoLabelEnergia) textoLabelEnergia.text = "ALMA"; if(textoNewsPerfil) textoNewsPerfil.text = "Sustained Dream: Requiem";
-                    if(textoNewsLegenda) textoNewsLegenda.text = "O piano fantasma ecoa no bloco 4...";
-                    if(textoTituloCenario) textoTituloCenario.text = "LOCAL DO DUELO";
+                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Acordo da Máfia: Perca, e seus registros musicais serão APAGADOS da história.";
+                    if(textoBotaoAceitar) textoBotaoAceitar.text = "ACEITAR APOSTA"; if(textoBotaoRecusar) textoBotaoRecusar.text = "PROTEGER DISCOS";
+                    if(textoLabelEnergia) textoLabelEnergia.text = "SUSTAINED DREAM"; if(textoNewsPerfil) textoNewsPerfil.text = "Lôrna & Giovanna";
+                    if(textoNewsLegenda) textoNewsLegenda.text = "O alvo é 100 pontos para purgar a máfia da Itália!";
+                    if(textoTituloCenario) textoTituloCenario.text = "ESCONDERIJO EM NÁPOLES";
                     break;
             }
         } else {
+            modoApostaAtivo = false;
             switch (idiomaAtual) {
                 case Language.English:
                     if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Lôrna, darling! Style Showcase?";
@@ -1360,6 +1386,20 @@ public class PingPongVideoManual : MonoBehaviour
                     if(textoLabelEnergia) textoLabelEnergia.text = "GAUGE"; if(textoNewsPerfil) textoNewsPerfil.text = "Sustained Dream";
                     if(textoNewsLegenda) textoNewsLegenda.text = "Lôrna Mikalle crushing it at the Ping-Pong Club!";
                     if(textoTituloCenario) textoTituloCenario.text = "CHOOSE STAGE";
+                    break;
+                case Language.Espanol:
+                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "¡Lôrna, querida! ¿Exhibición de estilo?";
+                    if(textoBotaoAceitar) textoBotaoAceitar.text = "COMBATIR"; if(textoBotaoRecusar) textoBotaoRecusar.text = "HUIR";
+                    if(textoLabelEnergia) textoLabelEnergia.text = "ENERGÍA"; if(textoNewsPerfil) textoNewsPerfil.text = "Sustained Dream";
+                    if(textoNewsLegenda) textoNewsLegenda.text = "¡Lôrna Mikalle arrasando en el club de ping-pong!";
+                    if(textoTituloCenario) textoTituloCenario.text = "ELIGE EL ESCENARIO";
+                    break;
+                case Language.Italiano:
+                    if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Lôrna, cara! Esibizione di stile?";
+                    if(textoBotaoAceitar) textoBotaoAceitar.text = "COMBATTI"; if(textoBotaoRecusar) textoBotaoRecusar.text = "RIFIUTA";
+                    if(textoLabelEnergia) textoLabelEnergia.text = "ENERGIA"; if(textoNewsPerfil) textoNewsPerfil.text = "Sustained Dream";
+                    if(textoNewsLegenda) textoNewsLegenda.text = "Lôrna Mikalle spacca al club di ping-pong!";
+                    if(textoTituloCenario) textoTituloCenario.text = "SCEGLI LO SCENARIO";
                     break;
                 default:
                     if(textoNotificacaoDesafio) textoNotificacaoDesafio.text = "Lôrna, amada! Style Showcase?";
@@ -1373,19 +1413,219 @@ public class PingPongVideoManual : MonoBehaviour
     }
 
     string GetTexto(string chave) {
-        if (isSeason2) {
+        if (modoApostaAtivo) {
             switch (idiomaAtual) {
-                case Language.English: return chave == "R1" ? "MATCH 1..." : "SURVIVE!";
-                case Language.Espanol: return chave == "R1" ? "DUELO 1..." : "¡SOBREVIVE!";
-                case Language.Italiano: return chave == "R1" ? "PARTITA 1..." : "SOPRAVVIVI!";
-                default: return chave == "R1" ? "DUELO 1..." : "SOBREVIVA!";
+                case Language.English: 
+                    if (chave == "R1") return "MATCH 1...";
+                    if (chave == "ReconstruaMelodia") return "REBUILD THE MELODY";
+                    if (chave == "SurviveOrFight") return "SURVIVE!";
+                    if (chave == "Conectando") return "CONNECTING...";
+                    if (chave == "MundoOffline") return "WORLD OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED UPDATED";
+                    if (chave == "FeedDica1") return "Tip: Hit chords sharply, ignore arpeggios!";
+                    if (chave == "FeedDica2") return "Review: Mafia's power is insane!";
+                    if (chave == "FalhaGPG") return "FAILED GPG CONNECTION";
+                    if (chave == "ImportacaoCancelada") return "IMPORT CANCELLED";
+                    if (chave == "SelecioneMidi") return "Select MIDI Song";
+                    if (chave == "ImportarBotao") return "Import";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NOT FOUND";
+                    if (chave == "LendoPartitura") return "READING SHEET...";
+                    if (chave == "ImportandoMusica") return "IMPORTING...";
+                    if (chave == "TutorialIniciado") return "TUTORIAL STARTED!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL CLEARED";
+                    if (chave == "MemoriaRestaurada") return "MEMORY RESTORED!";
+                    if (chave == "ErroMelodia") return "Miss! Restart Melody.";
+                    if (chave == "AguardandoAcorde") return "Waiting Chord...";
+                    if (chave == "AcordeDiminuto") return "Diminished Chord";
+                    if (chave == "AcordeAumentado") return "Augmented Chord";
+                    if (chave == "AcordeMenor") return "Minor Chord";
+                    if (chave == "AcordeMaior") return "Major Chord";
+                    return "SURVIVE!";
+                case Language.Espanol: 
+                    if (chave == "R1") return "DUELO 1...";
+                    if (chave == "ReconstruaMelodia") return "RECONSTRUYE MELODÍA";
+                    if (chave == "SurviveOrFight") return "¡SOBREVIVE!";
+                    if (chave == "Conectando") return "CONECTANDO...";
+                    if (chave == "MundoOffline") return "MUNDO OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED ACTUALIZADO";
+                    if (chave == "FeedDica1") return "Tip: Toca fuerte los acordes!";
+                    if (chave == "FeedDica2") return "Review: ¡La Mafia es una locura!";
+                    if (chave == "FalhaGPG") return "FALLO EN GPG";
+                    if (chave == "ImportacaoCancelada") return "IMPORTACIÓN CANCELADA";
+                    if (chave == "SelecioneMidi") return "Selecciona MIDI";
+                    if (chave == "ImportarBotao") return "Importar";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NO ENCONTRADO";
+                    if (chave == "LendoPartitura") return "LEYENDO...";
+                    if (chave == "ImportandoMusica") return "IMPORTANDO...";
+                    if (chave == "TutorialIniciado") return "¡TUTORIAL INICIADO!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL COMPLETADO";
+                    if (chave == "MemoriaRestaurada") return "¡MEMORIA RESTAURADA!";
+                    if (chave == "ErroMelodia") return "¡Fallo! Reinicia.";
+                    if (chave == "AguardandoAcorde") return "Esperando Acorde...";
+                    if (chave == "AcordeDiminuto") return "Acorde Disminuido";
+                    if (chave == "AcordeAumentado") return "Acorde Aumentado";
+                    if (chave == "AcordeMenor") return "Acorde Menor";
+                    if (chave == "AcordeMaior") return "Acorde Mayor";
+                    return "¡SOBREVIVE!";
+                case Language.Italiano: 
+                    if (chave == "R1") return "PARTITA 1...";
+                    if (chave == "ReconstruaMelodia") return "RICOSTRUISCI LA MELODIA";
+                    if (chave == "SurviveOrFight") return "SOPRAVVIVI!";
+                    if (chave == "Conectando") return "CONNESSIONE...";
+                    if (chave == "MundoOffline") return "MONDO OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED AGGIORNATO";
+                    if (chave == "FeedDica1") return "Tip: Suona gli accordi secchi!";
+                    if (chave == "FeedDica2") return "Review: Il potere della Mafia è pazzesco!";
+                    if (chave == "FalhaGPG") return "CONNESSIONE GPG FALLITA";
+                    if (chave == "ImportacaoCancelada") return "IMPORTAZIONE ANNULLATA";
+                    if (chave == "SelecioneMidi") return "Seleziona MIDI";
+                    if (chave == "ImportarBotao") return "Importa";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NON TROVATO";
+                    if (chave == "LendoPartitura") return "LETTURA SPARTITO...";
+                    if (chave == "ImportandoMusica") return "IMPORTAZIONE...";
+                    if (chave == "TutorialIniciado") return "TUTORIAL INIZIATO!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL COMPLETATO";
+                    if (chave == "MemoriaRestaurada") return "MEMORIA RESTAURATA!";
+                    if (chave == "ErroMelodia") return "Errore! Ricomincia.";
+                    if (chave == "AguardandoAcorde") return "In attesa Accordo...";
+                    if (chave == "AcordeDiminuto") return "Accordo Diminuito";
+                    if (chave == "AcordeAumentado") return "Accordo Eccedente";
+                    if (chave == "AcordeMenor") return "Accordo Minore";
+                    if (chave == "AcordeMaior") return "Accordo Maggiore";
+                    return "SOPRAVVIVI!";
+                default: 
+                    if (chave == "R1") return "DUELO 1...";
+                    if (chave == "ReconstruaMelodia") return "RECONSTRUA A MELODIA";
+                    if (chave == "SurviveOrFight") return "SOBREVIVA!";
+                    if (chave == "Conectando") return "CONECTANDO...";
+                    if (chave == "MundoOffline") return "MUNDO OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED ATUALIZADO";
+                    if (chave == "FeedDica1") return "Dica: Bata os acordes secos!";
+                    if (chave == "FeedDica2") return "Review: A Máfia de Nápoles tá insana!";
+                    if (chave == "FalhaGPG") return "FALHA GPG";
+                    if (chave == "ImportacaoCancelada") return "IMPORTAÇÃO CANCELADA";
+                    if (chave == "SelecioneMidi") return "Selecione MIDI";
+                    if (chave == "ImportarBotao") return "Importar";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NÃO ENCONTRADO";
+                    if (chave == "LendoPartitura") return "LENDO PARTITURA...";
+                    if (chave == "ImportandoMusica") return "IMPORTANDO...";
+                    if (chave == "TutorialIniciado") return "TUTORIAL INICIADO!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL CONCLUÍDO";
+                    if (chave == "MemoriaRestaurada") return "MEMÓRIA RESTAURADA!";
+                    if (chave == "ErroMelodia") return "Errou! Recomece.";
+                    if (chave == "AguardandoAcorde") return "Aguardando Acorde...";
+                    if (chave == "AcordeDiminuto") return "Acorde Diminuto";
+                    if (chave == "AcordeAumentado") return "Acorde Aumentado";
+                    if (chave == "AcordeMenor") return "Acorde Menor";
+                    if (chave == "AcordeMaior") return "Acorde Maior";
+                    return "SOBREVIVA!";
             }
         } else {
             switch (idiomaAtual) {
-                case Language.English: return chave == "R1" ? "ROUND 1..." : "FIGHT!";
-                case Language.Espanol: return chave == "R1" ? "ROUND 1..." : "¡A PELEAR!";
-                case Language.Italiano: return chave == "R1" ? "PRIMO ROUND..." : "COMBATTE!";
-                default: return chave == "R1" ? "ROUND 1..." : "COMBATER!";
+                case Language.English: 
+                    if (chave == "R1") return "ROUND 1...";
+                    if (chave == "SurviveOrFight") return "FIGHT!";
+                    if (chave == "MemoriaRestaurada") return "MELODY COMPLETE!";
+                    if (chave == "ReconstruaMelodia") return "REBUILD THE MELODY";
+                    if (chave == "Conectando") return "CONNECTING...";
+                    if (chave == "MundoOffline") return "WORLD OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED UPDATED";
+                    if (chave == "FeedDica1") return "Tip: Hit chords sharply, ignore arpeggios!";
+                    if (chave == "FeedDica2") return "Review: The ping pong club is awesome!";
+                    if (chave == "FalhaGPG") return "FAILED GPG CONNECTION";
+                    if (chave == "ImportacaoCancelada") return "IMPORT CANCELLED";
+                    if (chave == "SelecioneMidi") return "Select MIDI Song";
+                    if (chave == "ImportarBotao") return "Import";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NOT FOUND";
+                    if (chave == "LendoPartitura") return "READING SHEET...";
+                    if (chave == "ImportandoMusica") return "IMPORTING...";
+                    if (chave == "TutorialIniciado") return "TUTORIAL STARTED!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL CLEARED";
+                    if (chave == "ErroMelodia") return "Miss! Restart Melody.";
+                    if (chave == "AguardandoAcorde") return "Waiting Chord...";
+                    if (chave == "AcordeDiminuto") return "Diminished Chord";
+                    if (chave == "AcordeAumentado") return "Augmented Chord";
+                    if (chave == "AcordeMenor") return "Minor Chord";
+                    if (chave == "AcordeMaior") return "Major Chord";
+                    return "FIGHT!";
+                case Language.Espanol: 
+                    if (chave == "R1") return "ROUND 1...";
+                    if (chave == "SurviveOrFight") return "¡A PELEAR!";
+                    if (chave == "MemoriaRestaurada") return "¡MELODÍA COMPLETA!";
+                    if (chave == "ReconstruaMelodia") return "RECONSTRUYE MELODÍA";
+                    if (chave == "Conectando") return "CONECTANDO...";
+                    if (chave == "MundoOffline") return "MUNDO OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED ACTUALIZADO";
+                    if (chave == "FeedDica1") return "Tip: Toca fuerte los acordes!";
+                    if (chave == "FeedDica2") return "Review: ¡El club de ping pong es genial!";
+                    if (chave == "FalhaGPG") return "FALLO EN GPG";
+                    if (chave == "ImportacaoCancelada") return "IMPORTACIÓN CANCELADA";
+                    if (chave == "SelecioneMidi") return "Selecciona MIDI";
+                    if (chave == "ImportarBotao") return "Importar";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NO ENCONTRADO";
+                    if (chave == "LendoPartitura") return "LEYENDO...";
+                    if (chave == "ImportandoMusica") return "IMPORTANDO...";
+                    if (chave == "TutorialIniciado") return "¡TUTORIAL INICIADO!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL COMPLETADO";
+                    if (chave == "ErroMelodia") return "¡Fallo! Reinicia.";
+                    if (chave == "AguardandoAcorde") return "Esperando Acorde...";
+                    if (chave == "AcordeDiminuto") return "Acorde Disminuido";
+                    if (chave == "AcordeAumentado") return "Acorde Aumentado";
+                    if (chave == "AcordeMenor") return "Acorde Menor";
+                    if (chave == "AcordeMaior") return "Acorde Mayor";
+                    return "¡A PELEAR!";
+                case Language.Italiano: 
+                    if (chave == "R1") return "PRIMO ROUND...";
+                    if (chave == "SurviveOrFight") return "COMBATTI!";
+                    if (chave == "MemoriaRestaurada") return "MELODIA COMPLETA!";
+                    if (chave == "ReconstruaMelodia") return "RICOSTRUISCI LA MELODIA";
+                    if (chave == "Conectando") return "CONNESSIONE...";
+                    if (chave == "MundoOffline") return "MONDO OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED AGGIORNATO";
+                    if (chave == "FeedDica1") return "Tip: Suona gli accordi secchi!";
+                    if (chave == "FeedDica2") return "Review: Il club di ping pong è fantastico!";
+                    if (chave == "FalhaGPG") return "CONNESSIONE GPG FALLITA";
+                    if (chave == "ImportacaoCancelada") return "IMPORTAZIONE ANNULLATA";
+                    if (chave == "SelecioneMidi") return "Seleziona MIDI";
+                    if (chave == "ImportarBotao") return "Importa";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NON TROVATO";
+                    if (chave == "LendoPartitura") return "LETTURA SPARTITO...";
+                    if (chave == "ImportandoMusica") return "IMPORTAZIONE...";
+                    if (chave == "TutorialIniciado") return "TUTORIAL INIZIATO!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL COMPLETATO";
+                    if (chave == "ErroMelodia") return "Errore! Ricomincia.";
+                    if (chave == "AguardandoAcorde") return "In attesa Accordo...";
+                    if (chave == "AcordeDiminuto") return "Accordo Diminuito";
+                    if (chave == "AcordeAumentado") return "Accordo Eccedente";
+                    if (chave == "AcordeMenor") return "Accordo Minore";
+                    if (chave == "AcordeMaior") return "Accordo Maggiore";
+                    return "COMBATTE!";
+                default: 
+                    if (chave == "R1") return "ROUND 1...";
+                    if (chave == "SurviveOrFight") return "COMBATER!";
+                    if (chave == "MemoriaRestaurada") return "MELODIA COMPLETA!";
+                    if (chave == "ReconstruaMelodia") return "RECONSTRUA A MELODIA";
+                    if (chave == "Conectando") return "CONECTANDO...";
+                    if (chave == "MundoOffline") return "MUNDO OFFLINE";
+                    if (chave == "FeedAtualizado") return "FEED ATUALIZADO";
+                    if (chave == "FeedDica1") return "Dica: Bata os acordes secos!";
+                    if (chave == "FeedDica2") return "Review: O clube de ping pong é incrível!";
+                    if (chave == "FalhaGPG") return "FALHA GPG";
+                    if (chave == "ImportacaoCancelada") return "IMPORTAÇÃO CANCELADA";
+                    if (chave == "SelecioneMidi") return "Selecione MIDI";
+                    if (chave == "ImportarBotao") return "Importar";
+                    if (chave == "MidiNaoEncontrado") return "MIDI NÃO ENCONTRADO";
+                    if (chave == "LendoPartitura") return "LENDO PARTITURA...";
+                    if (chave == "ImportandoMusica") return "IMPORTANDO...";
+                    if (chave == "TutorialIniciado") return "TUTORIAL INICIADO!";
+                    if (chave == "TutorialConcluido") return "TUTORIAL CONCLUÍDO";
+                    if (chave == "ErroMelodia") return "Errou! Recomece.";
+                    if (chave == "AguardandoAcorde") return "Aguardando Acorde...";
+                    if (chave == "AcordeDiminuto") return "Acorde Diminuto";
+                    if (chave == "AcordeAumentado") return "Acorde Aumentado";
+                    if (chave == "AcordeMenor") return "Acorde Menor";
+                    if (chave == "AcordeMaior") return "Acorde Maior";
+                    return "COMBATER!";
             }
         }
     }
@@ -1394,26 +1634,14 @@ public class PingPongVideoManual : MonoBehaviour
         if (audioSfx && sfxMenuConfirm) audioSfx.PlayOneShot(sfxMenuConfirm);
         cenarioAtual = cenarioEscolhido;
         
-        isSeason2 = (cenarioAtual == TipoCenario.CelaIsolamento); 
+        modoApostaAtivo = (cenarioAtual == TipoCenario.NapolesMafia); 
         ConfigurarTextosDaLuta(); 
 
         if (painelSelecaoCenario) painelSelecaoCenario.SetActive(false);
         if (ambienteEscola) ambienteEscola.SetActive(cenarioAtual == TipoCenario.SalaEscolar);
-        if (ambienteNapoles) ambienteNapoles.SetActive(cenarioAtual == TipoCenario.NapolesPublico);
-        if (ambienteCela) ambienteCela.SetActive(cenarioAtual == TipoCenario.CelaIsolamento);
+        if (ambienteNapoles) ambienteNapoles.SetActive(cenarioAtual == TipoCenario.NapolesMafia);
 
-        if (cenarioAtual == TipoCenario.CelaIsolamento) {
-            if (inicioPartidaCela) inicioPartida = inicioPartidaCela;
-            if (jogador1ClipesCela != null && jogador1ClipesCela.Length > 0) jogador1Clipes = jogador1ClipesCela;
-            if (jogador2ClipesCela != null && jogador2ClipesCela.Length > 0) jogador2Clipes = jogador2ClipesCela;
-            if (jogador1PerdeuCela) jogador1Perdeu = jogador1PerdeuCela;
-            if (jogador2PerdeuCela) jogador2Perdeu = jogador2PerdeuCela;
-            if (goldenChordVideoCela) goldenChordVideo = goldenChordVideoCela;
-            if (videoEventoHeadshotCela) videoEventoHeadshot = videoEventoHeadshotCela;
-            if (jogador1ClipesClimaxCela != null && jogador1ClipesClimaxCela.Length > 0) jogador1ClipesClimax = jogador1ClipesClimaxCela;
-            if (jogador1ClipesTristesCela != null && jogador1ClipesTristesCela.Length > 0) jogador1ClipesTristes = jogador1ClipesTristesCela;
-        } 
-        else if (cenarioAtual == TipoCenario.NapolesPublico) {
+        if (cenarioAtual == TipoCenario.NapolesMafia) {
             if (inicioPartidaNapoles) inicioPartida = inicioPartidaNapoles;
             if (jogador1ClipesNapoles != null && jogador1ClipesNapoles.Length > 0) jogador1Clipes = jogador1ClipesNapoles;
             if (jogador2ClipesNapoles != null && jogador2ClipesNapoles.Length > 0) jogador2Clipes = jogador2ClipesNapoles;
@@ -1440,11 +1668,11 @@ public class PingPongVideoManual : MonoBehaviour
     }
 
     void IniciarPingPong() {
-        if (pontosJogador1 == 0) pontosJogador1 = PlayerPrefs.GetInt(isSeason2 ? "Mikalle_S2_PontoFinal" : "Mikalle_PontoFinal", 0);
+        if (pontosJogador1 == 0) pontosJogador1 = PlayerPrefs.GetFloat(modoApostaAtivo ? "Mikalle_Mafia_PontoFinal_Float" : "Mikalle_PontoFinal_Float", 0f);
         
-        pontosJogador2 = 0; proximoAlvoFase = ((pontosJogador1 / 15) + 1) * 15;
+        pontosJogador2 = 0; proximoAlvoFase = ((Mathf.Floor(pontosJogador1) / 15f) + 1f) * 15f;
         multiplicadorAdrenalina = 1.0f + (pontosJogador1 * 0.005f); energiaAtual = 0;
-        vidasLorna = 3;
+        registrosMusicaisRestantes = 3;
         
         botaoMovelAtivo = false; deveMoverBotaoSuave = false;
         janelaPerfeitaAtual = margemPerfeito;
@@ -1463,9 +1691,9 @@ public class PingPongVideoManual : MonoBehaviour
 
     void AtualizarLogicaDificuldade() {
         float progressoJogo = Mathf.Clamp01((float)pontosJogador1 / pontosObjetivoFinal);
-        multiplicadorAdrenalina = 1.0f + curvaMultiplicadorAdrenalina.Evaluate(progressoJogo) * (isSeason2 ? 3.0f : 2.5f); 
+        multiplicadorAdrenalina = 1.0f + curvaMultiplicadorAdrenalina.Evaluate(progressoJogo) * (modoApostaAtivo ? 3.0f : 2.5f); 
         chanceErroIA = Mathf.Lerp(erroMaximoIA, erroMinimoIA, progressoJogo);
-        janelaPerfeitaAtual = Mathf.Lerp(margemPerfeito, margemPerfeito * (isSeason2 ? 0.2f : 0.3f), progressoJogo);
+        janelaPerfeitaAtual = Mathf.Lerp(margemPerfeito, margemPerfeito * (modoApostaAtivo ? 0.2f : 0.3f), progressoJogo);
 
         if (pontosJogador1 < 30) { botaoMovelAtivo = false; deveMoverBotaoSuave = false; }
         else if (pontosJogador1 >= 30 && pontosJogador1 < 60) { 
@@ -1473,7 +1701,7 @@ public class PingPongVideoManual : MonoBehaviour
             if (Random.value < 0.4f) StartCoroutine(TriggerFlashGiovanna()); 
         }
         else if (pontosJogador1 >= 60 && pontosJogador1 < 85) {
-            deveMoverBotaoSuave = true; velocidadeMovimentoBotao = isSeason2 ? 7f : 5f; 
+            deveMoverBotaoSuave = true; velocidadeMovimentoBotao = modoApostaAtivo ? 7f : 5f; 
             if (!botaoMovelAtivo) {
                 botaoMovelAtivo = true;
                 if (rotinaMoverBotao != null) StopCoroutine(rotinaMoverBotao);
@@ -1481,7 +1709,7 @@ public class PingPongVideoManual : MonoBehaviour
             }
         }
         else if (pontosJogador1 >= 85) {
-            deveMoverBotaoSuave = true; velocidadeMovimentoBotao = isSeason2 ? 15f : 12f; 
+            deveMoverBotaoSuave = true; velocidadeMovimentoBotao = modoApostaAtivo ? 15f : 12f; 
             if (rotinaMoverBotao != null) StopCoroutine(rotinaMoverBotao);
             rotinaMoverBotao = StartCoroutine(DefinirNovoAlvoBotao(0.4f)); 
         }
@@ -1520,7 +1748,7 @@ public class PingPongVideoManual : MonoBehaviour
             float t = 0; while(t < 0.5f) { t += Time.unscaledDeltaTime; textoAvisoFight.transform.localScale = Vector3.Lerp(Vector3.one * 5f, Vector3.one, t/0.5f); yield return null; }
             yield return new WaitForSeconds(0.5f);
             if (audioSfx && sfxFight) audioSfx.PlayOneShot(sfxFight);
-            textoAvisoFight.text = GetTexto("Fight");
+            textoAvisoFight.text = GetTexto("SurviveOrFight");
             textoAvisoFight.color = Color.red;
             StartCoroutine(EfeitoImpactoShake(0.3f, 20f));
             yield return new WaitForSeconds(0.8f);
@@ -1601,8 +1829,8 @@ public class PingPongVideoManual : MonoBehaviour
                         if (audioSfx && sfxEnergiaCheia) audioSfx.PlayOneShot(sfxEnergiaCheia); 
                         energiaSomTocado = true; 
                     }
-                    barraEnergiaUI.color = Color.Lerp(isSeason2 ? Color.cyan : Color.yellow, isSeason2 ? Color.white : Color.red, Mathf.PingPong(Time.unscaledTime * 4, 1)); 
-                } else { energiaSomTocado = false; barraEnergiaUI.color = isSeason2 ? new Color(0.2f, 0.6f, 1f) : Color.cyan; }
+                    barraEnergiaUI.color = Color.Lerp(modoApostaAtivo ? Color.cyan : Color.yellow, modoApostaAtivo ? Color.white : Color.red, Mathf.PingPong(Time.unscaledTime * 4, 1)); 
+                } else { energiaSomTocado = false; barraEnergiaUI.color = modoApostaAtivo ? new Color(0.2f, 0.6f, 1f) : Color.cyan; }
             }
         }
 
@@ -1635,13 +1863,16 @@ public class PingPongVideoManual : MonoBehaviour
         Color corHit = Color.white;
         
         float tempoRestante = Mathf.Max(0, tempoLimiteAbsoluto - Time.time);
+        
+        float pontuacaoGanho = 0f;
 
         if (tempoRestante <= 0.20f || tipoPoderMidi == "GOLDEN") {
             classificacao = "PERFECT!";
             corHit = Color.cyan;
-            energiaAtual = Mathf.Clamp01(energiaAtual + 0.15f);
+            energiaAtual = Mathf.Clamp01(energiaAtual + 0.05f); 
             comboAtual++;
-            pontosJogador1 += 2;
+            pontuacaoGanho = 0.5f * (1f + (comboAtual * 0.1f)); 
+            pontosJogador1 += pontuacaoGanho;
             forcaDoUltimoGolpe = "GOLDEN"; 
             if (audioSfx && sfxHitGolden) audioSfx.PlayOneShot(sfxHitGolden);
             if (habilitarEfeitosEspeciais) GerarTextoFlutuante("PERFECT!", corHit, botaoJogador1.GetComponent<RectTransform>().anchoredPosition);
@@ -1649,9 +1880,10 @@ public class PingPongVideoManual : MonoBehaviour
         } else if (tempoRestante <= 0.40f || tipoPoderMidi == "NORMAL") {
             classificacao = "GREAT!";
             corHit = Color.yellow;
-            energiaAtual = Mathf.Clamp01(energiaAtual + 0.08f);
+            energiaAtual = Mathf.Clamp01(energiaAtual + 0.02f); 
             comboAtual++;
-            pontosJogador1 += 1;
+            pontuacaoGanho = 0.2f * (1f + (comboAtual * 0.05f));
+            pontosJogador1 += pontuacaoGanho;
             forcaDoUltimoGolpe = "NORMAL";
             if (audioSfx && sfxHitNormal) audioSfx.PlayOneShot(sfxHitNormal);
             if (habilitarEfeitosEspeciais) GerarTextoFlutuante("GREAT!", corHit, botaoJogador1.GetComponent<RectTransform>().anchoredPosition);
@@ -1659,9 +1891,10 @@ public class PingPongVideoManual : MonoBehaviour
         } else {
             classificacao = "GOOD";
             corHit = Color.white;
-            energiaAtual = Mathf.Clamp01(energiaAtual + 0.02f);
+            energiaAtual = Mathf.Clamp01(energiaAtual + 0.005f); 
             comboAtual++;
-            pontosJogador1 += 1;
+            pontuacaoGanho = 0.1f; 
+            pontosJogador1 += pontuacaoGanho;
             forcaDoUltimoGolpe = "NORMAL";
             if (audioSfx && sfxHitNormal) audioSfx.PlayOneShot(sfxHitNormal, 0.5f);
             if (habilitarEfeitosEspeciais) GerarTextoFlutuante("GOOD", corHit, botaoJogador1.GetComponent<RectTransform>().anchoredPosition);
@@ -1670,12 +1903,13 @@ public class PingPongVideoManual : MonoBehaviour
         AudioSource m = UsarMusicaAtiva();
         float solo = usarTemaEspecial ? 60f : tempoDoSoloPiano;
         float diff = Mathf.Abs(m.time - solo);
-        float tecnicaAtual = isSeason2 ? tecnicaEspectral : focoEscolar;
+        float tecnicaAtual = modoApostaAtivo ? tecnicaEspectral : focoEscolar;
 
         if (diff <= (janelaPerfeitaAtual * tecnicaAtual)) {
             classificacao = "MUSIC PERFECT!";
             corHit = Color.magenta;
-            energiaAtual = Mathf.Clamp01(energiaAtual + 0.35f); 
+            energiaAtual = Mathf.Clamp01(energiaAtual + 0.15f); 
+            pontosJogador1 += 1.0f; 
             forcaDoUltimoGolpe = "GOLDEN";
             if (audioSfx && sfxHitGolden) audioSfx.PlayOneShot(sfxHitGolden);
             if (habilitarEfeitosEspeciais && !tempoParado) StartCoroutine(EfeitoTimeStop());
@@ -1687,7 +1921,7 @@ public class PingPongVideoManual : MonoBehaviour
 
         if (energiaAtual >= 0.98f || tipoPoderMidi == "GOLDEN") {
             if (missaoHarmonicaAtual != EmocaoMusical.Neutra) {
-                if (!easterEggApagaoAtivo) ShowFeedback(isSeason2 ? $"RESSONÂNCIA!\n{ultimoAcordeDetectado}" : $"MISSÃO CUMPRIDA!\n{ultimoAcordeDetectado}", Color.cyan);
+                if (!easterEggApagaoAtivo) ShowFeedback(modoApostaAtivo ? $"RESSONÂNCIA!\n{ultimoAcordeDetectado}" : $"MISSÃO CUMPRIDA!\n{ultimoAcordeDetectado}", Color.cyan);
                 missaoHarmonicaAtual = EmocaoMusical.Neutra; 
                 if (textoMissaoMusical) textoMissaoMusical.text = "";
             }
@@ -1727,14 +1961,14 @@ public class PingPongVideoManual : MonoBehaviour
 
         if (toquesNoConfronto >= 15) {
             ShowFeedback("OITAVADA DESTRUIDORA!", Color.cyan);
-            pontosJogador1 += 5; 
+            pontosJogador1 += 2f; 
             StartCoroutine(ZoomDramatico());
-            StartCoroutine(EfeitoStandAura(isSeason2 ? Color.cyan : new Color(1f, 0.8f, 0f)));
+            StartCoroutine(EfeitoStandAura(modoApostaAtivo ? Color.cyan : new Color(1f, 0.8f, 0f)));
             forcaDoUltimoGolpe = "GOLDEN";
             if (habilitarEfeitosEspeciais) GerarTextoFlutuante("OVERKILL!!", Color.cyan, botaoJogador1.GetComponent<RectTransform>().anchoredPosition);
         } else {
             ShowFeedback("ATAQUE FORTE!", Color.yellow);
-            pontosJogador1 += 2;
+            pontosJogador1 += 0.5f; 
             forcaDoUltimoGolpe = "NORMAL";
         }
 
@@ -1769,7 +2003,7 @@ public class PingPongVideoManual : MonoBehaviour
         }
         if (textoCombo && comboAtual > 1) {
             textoCombo.text = comboAtual.ToString() + " COMBO";
-            textoCombo.color = isSeason2 ? Color.cyan : Color.white;
+            textoCombo.color = modoApostaAtivo ? Color.cyan : Color.white;
         } else if (textoCombo) {
             textoCombo.text = "";
         }
@@ -1809,23 +2043,33 @@ public class PingPongVideoManual : MonoBehaviour
     IEnumerator EsperarEPontuar(int quemGanhou) {
         estadoAtual = EstadoJogo.PausaEntreRounds;
         yield return new WaitForSeconds(0.15f);
+        
         if (quemGanhou == 1) { 
-            pontosJogador1++; multiplicadorAdrenalina += 0.008f;
+            multiplicadorAdrenalina += 0.008f;
             if (audioSfx && sfxPontoGanhado) audioSfx.PlayOneShot(sfxPontoGanhado);
         } else { 
-            pontosJogador2++; energiaAtual = Mathf.Max(0, energiaAtual - 0.2f);
+            pontosJogador2 += 1f; 
+            energiaAtual = Mathf.Max(0, energiaAtual - 0.2f);
             
-            if (isSeason2) {
-                vidasLorna--; 
+            if (modoApostaAtivo) {
+                registrosMusicaisRestantes--; 
                 if (audioSfx && sfxDanoSofrido) audioSfx.PlayOneShot(sfxDanoSofrido);
                 StartCoroutine(EfeitoImpactoShake(0.5f, 30f)); 
-                if (vidasLorna <= 0) {
+                StartCoroutine(EfeitoGlitchDanoVisual()); 
+                
+                if (registrosMusicaisRestantes == 2) {
+                    ShowFeedback("REGISTRO APAGADO!\nOs arranjos sumiram da memória...", Color.red);
+                } else if (registrosMusicaisRestantes == 1) {
+                    ShowFeedback("ANOMALIA!\nO compasso de 120 BPM está desaparecendo...", Color.red);
+                }
+
+                if (registrosMusicaisRestantes <= 0) {
                     estadoAtual = EstadoJogo.EventoCinematico;
-                    ShowFeedback("ALMA DESTRUÍDA...", Color.red);
+                    ShowFeedback("A MÚSICA FOI TOTALMENTE DESTRUÍDA...", Color.red);
                     if (audioSfx && sfxDesintegracao) audioSfx.PlayOneShot(sfxDesintegracao);
                     
                     ReportarPontuacaoGooglePlay(pontosJogador1);
-                    ReproduzirAcao(lornaDesintegrandoVideo, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().name); });
+                    ReproduzirAcao(jogador1Perdeu, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().name); });
                     yield break; 
                 }
             } else {
@@ -1840,9 +2084,14 @@ public class PingPongVideoManual : MonoBehaviour
         if (pontosJogador1 >= proximoAlvoFase && !easterEggApagaoAtivo) {
             if (audioSfx && sfxKO) audioSfx.PlayOneShot(sfxKO);
             SalvarProgressoFase(); yield return StartCoroutine(SequenciaConquistaFase());
-            proximoAlvoFase += 15; AtualizarCenarioFase();
+            proximoAlvoFase += 15f; AtualizarCenarioFase();
             
-            if (isSeason2 && (pontosJogador1 == 30 || pontosJogador1 == 60)) {
+            if (modoApostaAtivo && registrosMusicaisRestantes < 3) {
+                registrosMusicaisRestantes++;
+                ShowFeedback("GIOVANNA RECUPEROU UM ARQUIVO!", Color.cyan);
+            }
+            
+            if (modoApostaAtivo && (Mathf.FloorToInt(pontosJogador1) == 30 || Mathf.FloorToInt(pontosJogador1) == 60)) {
                 AlternarModoPianoSolo(true);
                 yield break; 
             }
@@ -1854,8 +2103,10 @@ public class PingPongVideoManual : MonoBehaviour
 
     void AtualizarPontuacao() { 
         if (textoPontuacao) {
-            if (isSeason2) textoPontuacao.text = $" {pontosJogador1}        {pontosJogador2}\nVIDAS: {vidasLorna}";
-            else textoPontuacao.text = $" {pontosJogador1}        {pontosJogador2}"; 
+            if (modoApostaAtivo) 
+                textoPontuacao.text = $" {pontosJogador1:F1}        {pontosJogador2:F0}\nREGISTROS INTACTOS: {registrosMusicaisRestantes}";
+            else 
+                textoPontuacao.text = $" {pontosJogador1:F1}     {pontosJogador2:F0}"; 
         }
     }
 
@@ -1916,12 +2167,12 @@ public class PingPongVideoManual : MonoBehaviour
         if (botaoJogador1) { RandomizarPosicaoBotao(); botaoJogador1.interactable = true; }
         
         AtualizarLogicaDificuldade(); 
-        tempoDificuldadeAtual = Mathf.Max(isSeason2 ? 0.20f : 0.25f, (isSeason2 ? 1.6f : 1.8f) / multiplicadorAdrenalina); 
+        tempoDificuldadeAtual = Mathf.Max(modoApostaAtivo ? 0.20f : 0.25f, (modoApostaAtivo ? 1.6f : 1.8f) / multiplicadorAdrenalina); 
 
         if (pontosJogador1 >= 15 && Random.value > 0.6f && textoMissaoMusical != null && !easterEggApagaoAtivo) {
             missaoHarmonicaAtual = (EmocaoMusical)Random.Range(1, 4); 
             string nomeMissao = missaoHarmonicaAtual == EmocaoMusical.VitoriaMaior ? "Maior" : (missaoHarmonicaAtual == EmocaoMusical.TensaoMenor ? "Menor" : "Diminuto");
-            textoMissaoMusical.text = (isSeason2 ? "ALVO: Rebata com Acorde " : "DICA: Rebata com Acorde ") + nomeMissao + "!";
+            textoMissaoMusical.text = (modoApostaAtivo ? "ALVO: Rebata com Acorde " : "DICA: Rebata com Acorde ") + nomeMissao + "!";
             textoMissaoMusical.color = Color.white;
         } else {
             missaoHarmonicaAtual = EmocaoMusical.Neutra;
@@ -1932,7 +2183,12 @@ public class PingPongVideoManual : MonoBehaviour
         if (contagem) { tempoLimiteAbsoluto = Time.time + tempoDificuldadeAtual; timerTurnoCoroutine = StartCoroutine(ContagemRegressiva(tempoDificuldadeAtual)); }
     }
 
-    IEnumerator ContagemRegressiva(float t) { yield return new WaitForSeconds(t); if(estadoAtual == EstadoJogo.TurnoJogador1 && !estouAguardandoSaque) ReproduzirAcao(null, () => StartCoroutine(EsperarEPontuar(2))); }
+   IEnumerator ContagemRegressiva(float t) { 
+       yield return new WaitForSeconds(t); 
+       if(estadoAtual == EstadoJogo.TurnoJogador1 && !estouAguardandoSaque) {
+           QuebrarCombo();
+       } 
+    }
     
     IEnumerator ImpactFrame(float d) { 
         float os = Time.timeScale; 
@@ -2002,8 +2258,8 @@ public class PingPongVideoManual : MonoBehaviour
         
         float chanceErroLocal = chanceErroIA;
         if (pontosJogador1 >= 30) {
-            if (densidadeAcaoMidi <= 0.4f && (emocaoAtual == EmocaoMusical.TensaoMenor || emocaoAtual == EmocaoMusical.PerigoDiminuto)) chanceErroLocal *= (isSeason2 ? 0.1f : 0.3f); 
-            else if (densidadeAcaoMidi >= 0.7f && (emocaoAtual == EmocaoMusical.VitoriaMaior || emocaoAtual == EmocaoMusical.MagiaAumentada)) chanceErroLocal *= (isSeason2 ? 2.5f : 2.0f); 
+            if (densidadeAcaoMidi <= 0.4f && (emocaoAtual == EmocaoMusical.TensaoMenor || emocaoAtual == EmocaoMusical.PerigoDiminuto)) chanceErroLocal *= (modoApostaAtivo ? 0.1f : 0.3f); 
+            else if (densidadeAcaoMidi >= 0.7f && (emocaoAtual == EmocaoMusical.VitoriaMaior || emocaoAtual == EmocaoMusical.MagiaAumentada)) chanceErroLocal *= (modoApostaAtivo ? 2.5f : 2.0f); 
         }
 
         if (Random.value < chanceErroLocal && !easterEggApagaoAtivo) ReproduzirAcao(jogador2Perdeu, () => StartCoroutine(EsperarEPontuar(1)));
@@ -2047,25 +2303,30 @@ public class PingPongVideoManual : MonoBehaviour
     }
 
     void SalvarProgressoFase() { 
-        PlayerPrefs.SetInt(isSeason2 ? "Mikalle_S2_PontoFinal" : "Mikalle_PontoFinal", pontosJogador1); 
+        PlayerPrefs.SetFloat(modoApostaAtivo ? "Mikalle_Mafia_PontoFinal_Float" : "Mikalle_PontoFinal_Float", pontosJogador1); 
         PlayerPrefs.Save(); 
         ReportarPontuacaoGooglePlay(pontosJogador1);
     }
 
-    void AtualizarCenarioFase() { int fases = pontosJogador1 / 15; for (int i = 0; i < fases; i++) if (i < publicoFase.Length && publicoFase[i]) publicoFase[i].gameObject.SetActive(true); if (pontosJogador1 >= 80 && overlayCorCenario && !easterEggApagaoAtivo) overlayCorCenario.color = new Color(1, 0, 0.8f, 0.15f); }
+    void AtualizarCenarioFase() { int fases = Mathf.FloorToInt(pontosJogador1) / 15; for (int i = 0; i < fases; i++) if (i < publicoFase.Length && publicoFase[i]) publicoFase[i].gameObject.SetActive(true); if (pontosJogador1 >= 80 && overlayCorCenario && !easterEggApagaoAtivo) overlayCorCenario.color = new Color(1, 0, 0.8f, 0.15f); }
     
     void FinalizarJogo() { 
         estadoAtual = EstadoJogo.EventoCinematico;
         ReportarPontuacaoGooglePlay(pontosJogador1);
 
-        PlayerPrefs.DeleteKey(isSeason2 ? "Mikalle_S2_PontoFinal" : "Mikalle_PontoFinal"); 
+        PlayerPrefs.DeleteKey(modoApostaAtivo ? "Mikalle_Mafia_PontoFinal_Float" : "Mikalle_PontoFinal_Float"); 
         
         StartCoroutine(RotinaRecompensaFinal());
     }
 
     IEnumerator RotinaRecompensaFinal() {
         if (audioSfx && sfxEnergiaCheia) audioSfx.PlayOneShot(sfxEnergiaCheia);
-        ShowFeedback("SUPREME MASTER!!\n100 PONTOS", Color.yellow);
+        
+        if (modoApostaAtivo) {
+            ShowFeedback("CAPANGA DERROTADO!\nMÚSICA SALVA EM RÉ MAIOR!", Color.yellow);
+        } else {
+            ShowFeedback("SUPREME MASTER!!\n100 PONTOS", Color.yellow);
+        }
         
         if (brilhoPlacar) brilhoPlacar.color = Color.yellow;
         if (painelPlacar) painelPlacar.localScale = Vector3.one * 1.5f;
@@ -2077,13 +2338,11 @@ public class PingPongVideoManual : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2.0f);
 
-        if (isSeason2) {
-            if (audioSfx && sfxDesintegracao) audioSfx.PlayOneShot(sfxDesintegracao);
-            ShowFeedback("REVENGE...", Color.cyan);
-            ReproduzirAcao(bossDesintegrandoVideo, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().name); });
-        } else {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        if (modoApostaAtivo) {
+            ShowFeedback("SUSTAINED DREAM ALCANÇADO...", Color.cyan);
+            yield return new WaitForSecondsRealtime(2.0f);
         }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
     }
 
     void DetectarIdiomaDoCelular() {
@@ -2097,11 +2356,11 @@ public class PingPongVideoManual : MonoBehaviour
     void OnGUI() {
         if (!Application.isEditor) return;
         GUI.backgroundColor = Color.black;
-        GUI.Box(new Rect(10, 10, 350, 300), isSeason2 ? "LORNA MIKALLE: PHANTOM KEYS (S2)" : "LORNA MIKALLE - SUPREME SYSTEM");
+        GUI.Box(new Rect(10, 10, 350, 300), modoApostaAtivo ? "LORNA MIKALLE: MAFIA DEAL" : "LORNA MIKALLE - SUPREME SYSTEM");
         GUI.Label(new Rect(20, 30, 330, 20), $"Adrenalina: {multiplicadorAdrenalina:F2}x | Gauge: {energiaAtual*100:F0}%");
         GUI.Label(new Rect(20, 50, 330, 20), $"Vibe: {(pontosJogador1 >= 30 ? emocaoAtual.ToString() : "Bloqueada (<30pts)")}");
-        if (isSeason2) GUI.Label(new Rect(20, 70, 330, 20), $"Pontos: {pontosJogador1}/{pontosObjetivoFinal} | Vidas: {vidasLorna}");
-        else GUI.Label(new Rect(20, 70, 330, 20), $"Pontos: {pontosJogador1}/{pontosObjetivoFinal} | Status: {statusRealtime}");
+        if (modoApostaAtivo) GUI.Label(new Rect(20, 70, 330, 20), $"Pontos: {pontosJogador1:F1}/{pontosObjetivoFinal} | Registros: {registrosMusicaisRestantes}");
+        else GUI.Label(new Rect(20, 70, 330, 20), $"Pontos: {pontosJogador1:F1}/{pontosObjetivoFinal} | Status: {statusRealtime}");
         GUI.Label(new Rect(20, 90, 330, 20), $"MIDI: {(controleMidiAtivo ? "Ativo" : "Inativo")} | Tocou: {ultimoAcordeDetectado}");
         GUI.Label(new Rect(20, 110, 330, 20), $"Sequence Step (EasterEgg): {sequenceStep}");
         
@@ -2180,4 +2439,16 @@ public class PingPongVideoManual : MonoBehaviour
         gravandoSpeedArt = false;
         ShowFeedback("FRAMES SALVOS NA GALERIA!", Color.green);
     }
+}
+
+[System.Serializable]
+public class PostSocial {
+    public string autor;
+    public string mensagem;
+    public string tipo;
+}
+
+[System.Serializable]
+public class FeedData {
+    public PostSocial[] posts;
 }
