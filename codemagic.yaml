@@ -1,11 +1,11 @@
 workflows:
   unity_ios_build_signed:
-    name: Unity iOS Build (Signed & App Store Connect)
+    name: "Unity iOS Build (Signed & App Store Connect)"
     max_build_duration: 120
     instance_type: mac_mini_m1
 
     integrations:
-      app_store_connect: "chave da apple" # <-- Certifique-se de usar o nome exato do painel do Codemagic
+      app_store_connect: "chave da apple"
 
     environment:
       unity: "6000.3.16f1"
@@ -20,7 +20,6 @@ workflows:
         XCODE_SCHEME: "Unity-iPhone"
         BUNDLE_ID: "com.RafaelOlv.SustainedPong"
 
-      # Configuração automática de assinatura para App Store (Alinhado corretamente)
       ios_signing:
         distribution_type: app_store
         bundle_identifier: "com.RafaelOlv.SustainedPong"
@@ -33,8 +32,6 @@ workflows:
       - name: Build iOS Project (Exportando do Unity)
         script: |
           echo "⚙️ Exportando projeto Xcode através do Unity 6..."
-          
-          # Usando a variável nativa do Codemagic ($UNITY_EXECUTABLE)
           $UNITY_EXECUTABLE \
             -batchmode \
             -quit \
@@ -42,16 +39,13 @@ workflows:
             -executeMethod "${BUILD_METHOD}" \
             -logFile unity_build_log.txt
           
-          # Guarda o status de saída do Unity
           UNITY_EXIT_CODE=$?
           
-          # Se o arquivo de log existir, mostra ele no terminal (ajuda muito no debug)
           if [ -f unity_build_log.txt ]; then
             echo "📋 Mostrando final do log do Unity:"
             tail -n 100 unity_build_log.txt
           fi
           
-          # Se o Unity falhou, encerra o build aqui
           if [ $UNITY_EXIT_CODE -ne 0 ]; then
             echo "❌ O Unity falhou com o status code $UNITY_EXIT_CODE"
             exit $UNITY_EXIT_CODE
@@ -61,7 +55,6 @@ workflows:
         script: |
           if [ ! -d "${UNITY_IOS_DIR}/${XCODE_PROJECT}" ]; then
             echo "❌ ERRO: O projeto Xcode não foi encontrado em ${UNITY_IOS_DIR}/${XCODE_PROJECT}."
-            echo "Isso significa que o script BuildScript.BuildiOS falhou ou salvou na pasta errada."
             exit 1
           fi
           echo "✅ Projeto Xcode encontrado com sucesso!"
@@ -79,5 +72,5 @@ workflows:
 
     publishing:
       app_store_connect:
-        auth: integration 
+        auth: integration
         submit_to_testflight: true
