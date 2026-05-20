@@ -30,19 +30,32 @@ workflows:
         script: |
           # ... (Seu script de licença como antes)
 
-      - name: Build iOS Project (Exportando do Unity)
+     - name: Build iOS Project (Exportando do Unity)
         script: |
-          echo "⚙️ Exportando projeto Xcode através do Unity..."
-          # Exemplo padrão de exportação. Ajuste o caminho do executável do Unity se necessário.
-          /Applications/Unity/Hub/Editor/2023.1.10f1/Unity.app/Contents/MacOS/Unity \
+          echo "⚙️ Exportando projeto Xcode através do Unity 6..."
+          
+          # Usando a variável nativa do Codemagic ($UNITY_EXECUTABLE)
+          $UNITY_EXECUTABLE \
             -batchmode \
             -quit \
             -projectPath "${PROJECT_PATH}" \
             -executeMethod "${BUILD_METHOD}" \
-            -logFile unity_build_log.txt || (cat unity_build_log.txt && exit 1)
+            -logFile unity_build_log.txt
           
-          # Essa última linha "|| (cat ...)" é o pulo do gato: se o Unity falhar, 
-          # ele imprime o log na tela do Codemagic em vez de falhar silenciosamente!
+          # Guarda o status de saída do Unity
+          UNITY_EXIT_CODE=$?
+          
+          # Se o arquivo de log existir, mostra ele no terminal (ajuda muito no debug)
+          if [ -f unity_build_log.txt ]; then
+            echo "📋 Mostrando final do log do Unity:"
+            tail -n 100 unity_build_log.txt
+          fi
+          
+          # Se o Unity falhou, encerra o build aqui
+          if [ $UNITY_EXIT_CODE -ne 0 ]; then
+            echo "❌ O Unity falhou com o status code $UNITY_EXIT_CODE"
+            exit $UNITY_EXIT_CODE
+          fi
 
       - name: Verificar se a pasta do Xcode foi criada
         script: |
