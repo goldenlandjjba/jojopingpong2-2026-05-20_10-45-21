@@ -18,7 +18,7 @@ workflows:
         UNITY_IOS_DIR: "build/ios"
         XCODE_PROJECT: "Unity-iPhone.xcodeproj"
         XCODE_SCHEME: "Unity-iPhone"
-        BUNDLE_ID: "com.suaempresa.seuapp" # <-- Troque pelo seu Bundle ID real
+        BUNDLE_ID: "com.RafaelOlv.SustainedPong" # <-- Troque pelo seu Bundle ID real
 
       # Configuração automática de assinatura para App Store
       ios_signing:
