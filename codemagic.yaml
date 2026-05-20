@@ -32,12 +32,9 @@ workflows:
       - name: Build iOS Project (Exportando do Unity)
         script: |
           echo "⚙️ Exportando projeto Xcode através do Unity 6..."
-          $UNITY_EXECUTABLE \
-            -batchmode \
-            -quit \
-            -projectPath "${PROJECT_PATH}" \
-            -executeMethod "${BUILD_METHOD}" \
-            -logFile unity_build_log.txt
+          
+          # Comando unificado em linha única para evitar o erro de 'command not found' (127)
+          $UNITY_EXECUTABLE -batchmode -quit -projectPath "${PROJECT_PATH}" -executeMethod "${BUILD_METHOD}" -logFile unity_build_log.txt
           
           UNITY_EXIT_CODE=$?
           
